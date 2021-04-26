@@ -1,2 +1,13 @@
+ignore_prefix: '!!'
+token: 'token'
+message:
+  join: '§8[§a+§8] §e{player}'
+  leave: '§8[§c-§8] §e{player}'
+  switch: '§8[§b❖§8] §e{player}§r: §7«{serverFrom}§7» §6➟ §7«{serverTo}§7»'
+  chat: '§7[{serverOn}§7]§e{player}§r: {message}'
 server_name:
-  serverID: serverName
+  serverID: 'serverName'
+broadcast:
+  port: 51800
+  servers:
+    - 'host:port'
