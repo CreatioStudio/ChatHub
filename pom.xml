@@ -6,7 +6,7 @@
 
     <groupId>io.github.zhang-anzhi</groupId>
     <artifactId>ChatBridge</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <packaging>jar</packaging>
 
     <name>ChatBridge</name>
@@ -77,6 +77,11 @@
             <artifactId>AdvancedBan</artifactId>
             <version>2.3.0</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.73</version>
         </dependency>
     </dependencies>
 </project>
