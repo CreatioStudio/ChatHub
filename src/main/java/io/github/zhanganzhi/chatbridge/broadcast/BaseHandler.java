@@ -48,7 +48,7 @@ class BaseHandler implements HttpHandler {
         try {
             JSONObject data = parseData(exchange.getRequestBody());
             String token = data.getString("token");
-            if (token != null && token.equals(chatBridge.getConfigManager().getToken())) {
+            if (token != null && token.equals(chatBridge.getConfigManager().getBroadcastToken())) {
                 handleRequest(data);
                 sendResponse(exchange, "OK");
             } else {

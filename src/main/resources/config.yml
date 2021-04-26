@@ -1,5 +1,4 @@
 ignore_prefix: '!!'
-token: 'token'
 message:
   join: '§8[§a+§8] §e{player}'
   leave: '§8[§c-§8] §e{player}'
@@ -9,5 +8,6 @@ server_name:
   serverID: 'serverName'
 broadcast:
   port: 51800
+  token: 'token'
   servers:
     - 'host:port'

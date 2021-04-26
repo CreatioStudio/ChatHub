@@ -16,10 +16,10 @@ import net.md_5.bungee.config.YamlConfiguration;
 public class ConfigManager {
     private Configuration config;
     private String ignorePrefix;
-    private String token;
     private final HashMap<String, String> message = new HashMap<>();
     private final HashMap<String, String> serverNameMap = new HashMap<>();
     private int broadcastPort;
+    private String broadcastToken;
     private ArrayList<String> broadcastServers;
 
     public ConfigManager(ChatBridge chatBridge) {
@@ -44,9 +44,6 @@ public class ConfigManager {
         // ignore_prefix
         ignorePrefix = config.getString("ignore_prefix");
 
-        // token
-        token = config.getString("token");
-
         // message
         Configuration messageConfiguration = (Configuration) config.get("message");
         message.put("join", messageConfiguration.getString("join"));
@@ -62,16 +59,13 @@ public class ConfigManager {
 
         // broadcast
         broadcastPort = config.getInt("broadcast.port");
+        broadcastToken = config.getString("broadcast.token");
         broadcastServers = (ArrayList<String>) config.getStringList("broadcast.servers");
         broadcastServers.remove("host:port");
     }
 
     public String getIgnorePrefix() {
         return ignorePrefix;
-    }
-
-    public String getToken() {
-        return token;
     }
 
     public String getServerName(String serverId) {
@@ -85,6 +79,10 @@ public class ConfigManager {
 
     public int getBroadcastPort() {
         return broadcastPort;
+    }
+
+    public String getBroadcastToken() {
+        return broadcastToken;
     }
 
     public ArrayList<String> getBroadcastServers() {

@@ -65,7 +65,7 @@ public class BroadcastManager {
         data.put("serverTo", serverTo);
         data.put("serverOn", serverOn);
         data.put("message", message);
-        data.put("token", chatBridge.getConfigManager().getToken());
+        data.put("token", chatBridge.getConfigManager().getBroadcastToken());
         return data.toString().getBytes();
     }
 
