@@ -1,11 +1,19 @@
-ignore_prefix: '!!'
+# Regex rules to ignore message
+ignore_rules:
+  - '!!.*'
+
+# Message template on each event
 message:
   join: '§8[§a+§8] §e{player}'
   leave: '§8[§c-§8] §e{player}'
   switch: '§8[§b❖§8] §e{player}§r: §7«{serverFrom}§7» §6➟ §7«{serverTo}§7»'
   chat: '§7[{serverOn}§7]§e{player}§r: {message}'
+
+# Server ID and Server Name map, name will be display in message
 server_name:
   serverID: 'serverName'
+
+# Broadcast option, set this to broadcast message with other BungeeCord or server
 broadcast:
   port: 51800
   token: 'token'
