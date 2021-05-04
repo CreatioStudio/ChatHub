@@ -39,16 +39,22 @@ public class EventListener implements Listener {
 
     @EventHandler
     public void onChat(ChatEvent event) {
-        if (event.isCommand() || event.isProxyCommand()) {
-            return;
-        }
         ProxiedPlayer player = (ProxiedPlayer) event.getSender();
-        if (ProxyServer.getInstance().getPluginManager().getPlugin("AdvancedBan") != null && AdvancedBan.isMuted(player)) {
+        String message = event.getMessage();
+        boolean isCommand = event.isCommand() || event.isProxyCommand();
+        boolean isMuted = ProxyServer.getInstance().getPluginManager().getPlugin("AdvancedBan") != null && AdvancedBan.isMuted(player);
+        if (isCommand || isMuted) {
             return;
         }
-        String message = event.getMessage();
         for (String ignoreRule : ConfigManager.getInstance().getIgnoreRules()) {
             if (Pattern.matches(ignoreRule, message)) {
+                return;
+            }
+        }
+        for (String blockWord : ConfigManager.getInstance().getBlockWords()) {
+            if (message.contains(blockWord)) {
+                MessageManager.getInstance().onBlockWord(player, message, blockWord);
+                event.setCancelled(true);
                 return;
             }
         }
