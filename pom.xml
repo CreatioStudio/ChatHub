@@ -4,14 +4,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.github.zhang-anzhi</groupId>
+    <groupId>vip.creatio</groupId>
     <artifactId>ChatBridge</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
     <packaging>jar</packaging>
 
     <name>ChatBridge</name>
 
-    <description>Chat Bridge for BungeeCord</description>
+    <description>ChatBridge for BungeeCord</description>
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

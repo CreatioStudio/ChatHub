@@ -1,6 +1,6 @@
 name: ChatBridge
 version: ${project.version}
-main: io.github.zhanganzhi.chatbridge.ChatBridge
+main: vip.creatio.ChatBridge.ChatBridge
 author: zhang_anzhi, HenryRenYz
-description: Chat Bridge between Bungeecord servers
+description: ${project.description}
 softDepends: [AdvancedBan]

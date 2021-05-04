@@ -1,11 +1,11 @@
-package io.github.zhanganzhi.chatbridge;
+package vip.creatio.ChatBridge;
 
-import io.github.zhanganzhi.chatbridge.manager.BroadcastManager;
+import vip.creatio.ChatBridge.manager.BroadcastManager;
 import net.md_5.bungee.api.plugin.Plugin;
-import io.github.zhanganzhi.chatbridge.event.EventListener;
-import io.github.zhanganzhi.chatbridge.manager.ConfigManager;
-import io.github.zhanganzhi.chatbridge.manager.MessageManager;
-import io.github.zhanganzhi.chatbridge.advancedban.AdvancedBan;
+import vip.creatio.ChatBridge.event.EventListener;
+import vip.creatio.ChatBridge.manager.ConfigManager;
+import vip.creatio.ChatBridge.manager.MessageManager;
+import vip.creatio.ChatBridge.advancedban.AdvancedBan;
 
 public final class ChatBridge extends Plugin {
     private BroadcastManager broadcastManager;

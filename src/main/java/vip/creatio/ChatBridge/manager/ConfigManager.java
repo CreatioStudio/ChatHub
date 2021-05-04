@@ -1,4 +1,4 @@
-package io.github.zhanganzhi.chatbridge.manager;
+package vip.creatio.ChatBridge.manager;
 
 
 import java.io.File;
@@ -7,7 +7,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import io.github.zhanganzhi.chatbridge.ChatBridge;
+import vip.creatio.ChatBridge.ChatBridge;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;

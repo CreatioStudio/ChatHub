@@ -1,12 +1,12 @@
-package io.github.zhanganzhi.chatbridge.manager;
+package vip.creatio.ChatBridge.manager;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sun.net.httpserver.HttpServer;
-import io.github.zhanganzhi.chatbridge.ChatBridge;
-import io.github.zhanganzhi.chatbridge.broadcast.ChatHandler;
-import io.github.zhanganzhi.chatbridge.broadcast.JoinHandler;
-import io.github.zhanganzhi.chatbridge.broadcast.LeaveHandler;
-import io.github.zhanganzhi.chatbridge.broadcast.SwitchHandler;
+import vip.creatio.ChatBridge.ChatBridge;
+import vip.creatio.ChatBridge.broadcast.ChatHandler;
+import vip.creatio.ChatBridge.broadcast.JoinHandler;
+import vip.creatio.ChatBridge.broadcast.LeaveHandler;
+import vip.creatio.ChatBridge.broadcast.SwitchHandler;
 
 import java.io.DataOutputStream;
 import java.io.IOException;

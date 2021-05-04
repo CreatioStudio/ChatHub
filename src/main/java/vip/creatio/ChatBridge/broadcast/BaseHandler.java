@@ -1,4 +1,4 @@
-package io.github.zhanganzhi.chatbridge.broadcast;
+package vip.creatio.ChatBridge.broadcast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,7 +10,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import io.github.zhanganzhi.chatbridge.ChatBridge;
+import vip.creatio.ChatBridge.ChatBridge;
 
 class BaseHandler implements HttpHandler {
     protected final ChatBridge chatBridge;
