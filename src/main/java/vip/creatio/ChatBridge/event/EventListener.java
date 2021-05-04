@@ -1,31 +1,30 @@
 package vip.creatio.ChatBridge.event;
 
-import vip.creatio.ChatBridge.ChatBridge;
+import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.*;
+import vip.creatio.ChatBridge.advancedban.AdvancedBan;
+import vip.creatio.ChatBridge.manager.BroadcastManager;
+import vip.creatio.ChatBridge.manager.ConfigManager;
+import vip.creatio.ChatBridge.manager.MessageManager;
+
+import java.util.regex.Pattern;
 
 public class EventListener implements Listener {
-    private final ChatBridge chatBridge;
-
-    public EventListener(ChatBridge chatBridge) {
-        this.chatBridge = chatBridge;
-    }
-
-
     @EventHandler
     public void onPostLogin(PostLoginEvent event) {
         String player = event.getPlayer().getName();
-        chatBridge.getMessageManager().onJoin(player);
-        chatBridge.getBroadcastManager().onJoin(player);
+        MessageManager.getInstance().onJoin(player);
+        BroadcastManager.getInstance().onJoin(player);
     }
 
     @EventHandler
     public void onPlayerDisconnect(PlayerDisconnectEvent event) {
         String player = event.getPlayer().getName();
-        chatBridge.getMessageManager().onLeave(player);
-        chatBridge.getBroadcastManager().onLeave(player);
+        MessageManager.getInstance().onLeave(player);
+        BroadcastManager.getInstance().onLeave(player);
     }
 
     @EventHandler
@@ -34,8 +33,8 @@ public class EventListener implements Listener {
         String playerName = player.getName();
         String serverFrom = event.getFrom() == null ? "" : event.getFrom().getName();
         String serverTo = player.getServer().getInfo().getName();
-        chatBridge.getMessageManager().onSwitch(playerName, serverFrom, serverTo);
-        chatBridge.getBroadcastManager().onSwitch(playerName, serverFrom, serverTo);
+        MessageManager.getInstance().onSwitch(playerName, serverFrom, serverTo);
+        BroadcastManager.getInstance().onSwitch(playerName, serverFrom, serverTo);
     }
 
     @EventHandler
@@ -44,19 +43,19 @@ public class EventListener implements Listener {
             return;
         }
         ProxiedPlayer player = (ProxiedPlayer) event.getSender();
-        if (this.chatBridge.isLoadAdvancedBan()) {
-            if (this.chatBridge.getAdvancedBan().isMuted(player)) {
-                return;
-            }
+        if (ProxyServer.getInstance().getPluginManager().getPlugin("AdvancedBan") != null && AdvancedBan.isMuted(player)) {
+            return;
         }
         String message = event.getMessage();
-        if (message.startsWith(chatBridge.getConfigManager().getIgnorePrefix())) {
-            return;
+        for (String ignoreRule : ConfigManager.getInstance().getIgnoreRules()) {
+            if (Pattern.matches(ignoreRule, message)) {
+                return;
+            }
         }
         event.setCancelled(true);
         String playerName = player.getName();
         String serverOn = player.getServer().getInfo().getName();
-        chatBridge.getMessageManager().onChat(playerName, serverOn, message);
-        chatBridge.getBroadcastManager().onChat(playerName, serverOn, message);
+        MessageManager.getInstance().onChat(playerName, serverOn, message);
+        BroadcastManager.getInstance().onChat(playerName, serverOn, message);
     }
 }

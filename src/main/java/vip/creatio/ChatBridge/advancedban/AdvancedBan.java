@@ -5,7 +5,7 @@ import me.leoko.advancedban.manager.PunishmentManager;
 import me.leoko.advancedban.manager.UUIDManager;
 
 public class AdvancedBan {
-    public boolean isMuted(ProxiedPlayer player) {
+    public static boolean isMuted(ProxiedPlayer player) {
         return PunishmentManager.get().isMuted(UUIDManager.get().getUUID(player.getName()));
     }
 }

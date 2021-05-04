@@ -2,7 +2,7 @@ package vip.creatio.ChatBridge.manager;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sun.net.httpserver.HttpServer;
-import vip.creatio.ChatBridge.ChatBridge;
+import net.md_5.bungee.api.ProxyServer;
 import vip.creatio.ChatBridge.broadcast.ChatHandler;
 import vip.creatio.ChatBridge.broadcast.JoinHandler;
 import vip.creatio.ChatBridge.broadcast.LeaveHandler;
@@ -15,21 +15,23 @@ import java.net.InetSocketAddress;
 import java.net.URL;
 
 public class BroadcastManager {
-    private final ChatBridge chatBridge;
+    private static final BroadcastManager instance = new BroadcastManager();
     private HttpServer server;
 
-    public BroadcastManager(ChatBridge chatBridge) {
-        this.chatBridge = chatBridge;
-        startServer();
+    private BroadcastManager() {
     }
 
-    private void startServer() {
+    public static BroadcastManager getInstance() {
+        return instance;
+    }
+
+    public void startServer() {
         try {
-            server = HttpServer.create(new InetSocketAddress(chatBridge.getConfigManager().getBroadcastPort()), 0);
-            server.createContext("/join", new JoinHandler(chatBridge));
-            server.createContext("/leave", new LeaveHandler(chatBridge));
-            server.createContext("/switch", new SwitchHandler(chatBridge));
-            server.createContext("/chat", new ChatHandler(chatBridge));
+            server = HttpServer.create(new InetSocketAddress(ConfigManager.getInstance().getBroadcastPort()), 0);
+            server.createContext("/join", new JoinHandler());
+            server.createContext("/leave", new LeaveHandler());
+            server.createContext("/switch", new SwitchHandler());
+            server.createContext("/chat", new ChatHandler());
             server.start();
         } catch (IOException e) {
             e.printStackTrace();
@@ -65,17 +67,17 @@ public class BroadcastManager {
         data.put("serverTo", serverTo);
         data.put("serverOn", serverOn);
         data.put("message", message);
-        data.put("token", chatBridge.getConfigManager().getBroadcastToken());
+        data.put("token", ConfigManager.getInstance().getBroadcastToken());
         return data.toString().getBytes();
     }
 
     private void broadcast(byte[] data, String path) {
-        for (String addr : chatBridge.getConfigManager().getBroadcastServers()) {
+        for (String addr : ConfigManager.getInstance().getBroadcastServers()) {
             Thread thread = new Thread(() -> {
                 try {
                     sendRequest("http://" + addr + path, data);
                 } catch (IOException e) {
-                    chatBridge.getLogger().severe("Fail connect to " + addr + path);
+                    ProxyServer.getInstance().getLogger().severe("Fail connect to " + addr + path);
                 }
             });
             thread.start();
