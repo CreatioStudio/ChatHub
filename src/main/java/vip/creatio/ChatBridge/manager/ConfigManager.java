@@ -4,8 +4,8 @@ package vip.creatio.ChatBridge.manager;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import vip.creatio.ChatBridge.ChatBridge;
 import net.md_5.bungee.config.Configuration;
@@ -15,12 +15,12 @@ import net.md_5.bungee.config.YamlConfiguration;
 
 public class ConfigManager {
     private Configuration config;
-    private String ignorePrefix;
+    private List<String> ignoreRules;
     private final HashMap<String, String> message = new HashMap<>();
     private final HashMap<String, String> serverNameMap = new HashMap<>();
     private int broadcastPort;
     private String broadcastToken;
-    private ArrayList<String> broadcastServers;
+    private List<String> broadcastServers;
 
     public ConfigManager(ChatBridge chatBridge) {
         if (!chatBridge.getDataFolder().exists()) {
@@ -42,7 +42,7 @@ public class ConfigManager {
 
     private void loadConfig() {
         // ignore_prefix
-        ignorePrefix = config.getString("ignore_prefix");
+        ignoreRules = config.getStringList("ignore_rules");
 
         // message
         Configuration messageConfiguration = (Configuration) config.get("message");
@@ -60,12 +60,12 @@ public class ConfigManager {
         // broadcast
         broadcastPort = config.getInt("broadcast.port");
         broadcastToken = config.getString("broadcast.token");
-        broadcastServers = (ArrayList<String>) config.getStringList("broadcast.servers");
+        broadcastServers = config.getStringList("broadcast.servers");
         broadcastServers.remove("host:port");
     }
 
-    public String getIgnorePrefix() {
-        return ignorePrefix;
+    public List<String> getIgnoreRules() {
+        return ignoreRules;
     }
 
     public String getServerName(String serverId) {
@@ -85,7 +85,7 @@ public class ConfigManager {
         return broadcastToken;
     }
 
-    public ArrayList<String> getBroadcastServers() {
+    public List<String> getBroadcastServers() {
         return broadcastServers;
     }
 }
