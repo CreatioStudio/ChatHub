@@ -10,15 +10,9 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import vip.creatio.ChatBridge.ChatBridge;
+import vip.creatio.ChatBridge.manager.ConfigManager;
 
 class BaseHandler implements HttpHandler {
-    protected final ChatBridge chatBridge;
-
-    public BaseHandler(ChatBridge chatBridge) {
-        this.chatBridge = chatBridge;
-    }
-
     protected JSONObject parseData(InputStream inputStream) {
         StringBuilder dataString = new StringBuilder();
         try {
@@ -48,7 +42,7 @@ class BaseHandler implements HttpHandler {
         try {
             JSONObject data = parseData(exchange.getRequestBody());
             String token = data.getString("token");
-            if (token != null && token.equals(chatBridge.getConfigManager().getBroadcastToken())) {
+            if (token != null && token.equals(ConfigManager.getInstance().getBroadcastToken())) {
                 handleRequest(data);
                 sendResponse(exchange, "OK");
             } else {
