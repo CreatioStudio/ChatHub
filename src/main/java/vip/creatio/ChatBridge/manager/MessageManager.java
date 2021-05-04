@@ -1,6 +1,6 @@
-package io.github.zhanganzhi.chatbridge.manager;
+package vip.creatio.ChatBridge.manager;
 
-import io.github.zhanganzhi.chatbridge.ChatBridge;
+import vip.creatio.ChatBridge.ChatBridge;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 

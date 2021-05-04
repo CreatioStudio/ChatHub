@@ -1,8 +1,8 @@
-package io.github.zhanganzhi.chatbridge.broadcast;
+package vip.creatio.ChatBridge.broadcast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sun.net.httpserver.HttpHandler;
-import io.github.zhanganzhi.chatbridge.ChatBridge;
+import vip.creatio.ChatBridge.ChatBridge;
 
 public class LeaveHandler extends BaseHandler implements HttpHandler {
     public LeaveHandler(ChatBridge chatBridge) {

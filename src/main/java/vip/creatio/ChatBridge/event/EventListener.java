@@ -1,6 +1,6 @@
-package io.github.zhanganzhi.chatbridge.event;
+package vip.creatio.ChatBridge.event;
 
-import io.github.zhanganzhi.chatbridge.ChatBridge;
+import vip.creatio.ChatBridge.ChatBridge;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
