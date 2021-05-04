@@ -8,7 +8,7 @@ import vip.creatio.ChatBridge.manager.ConfigManager;
 public final class ChatBridge extends Plugin {
     @Override
     public void onEnable() {
-        ConfigManager.getInstance().init(this);
+        ConfigManager.getInstance().loadConfig(this);
         BroadcastManager.getInstance().startServer();
         getProxy().getPluginManager().registerListener(this, new EventListener());
     }
