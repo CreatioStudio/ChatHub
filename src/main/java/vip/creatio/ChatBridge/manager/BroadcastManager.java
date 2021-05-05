@@ -3,16 +3,11 @@ package vip.creatio.ChatBridge.manager;
 import com.alibaba.fastjson.JSONObject;
 import com.sun.net.httpserver.HttpServer;
 import net.md_5.bungee.api.ProxyServer;
-import vip.creatio.ChatBridge.broadcast.ChatHandler;
-import vip.creatio.ChatBridge.broadcast.JoinHandler;
-import vip.creatio.ChatBridge.broadcast.LeaveHandler;
-import vip.creatio.ChatBridge.broadcast.SwitchHandler;
+import vip.creatio.ChatBridge.broadcast.*;
+import vip.creatio.ChatBridge.tool.Net;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
-import java.net.URL;
 
 public class BroadcastManager {
     private static final BroadcastManager instance = new BroadcastManager();
@@ -42,25 +37,7 @@ public class BroadcastManager {
         server.stop(0);
     }
 
-    private void sendRequest(String url, byte[] data) throws IOException {
-        HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
-        connection.setRequestMethod("POST");
-        connection.setDoOutput(true);
-        connection.setDoInput(true);
-        connection.setUseCaches(false);
-        connection.setInstanceFollowRedirects(true);
-        connection.setRequestProperty("Content-Type", "application/json");
-        connection.connect();
-        connection.setConnectTimeout(1000);
-        connection.setReadTimeout(1000);
-        DataOutputStream dataOutputStream = new DataOutputStream(connection.getOutputStream());
-        dataOutputStream.write(data);
-        dataOutputStream.flush();
-        dataOutputStream.close();
-        connection.getInputStream();
-    }
-
-    private byte[] getPostData(String player, String serverFrom, String serverTo, String serverOn, String message) {
+    private JSONObject getPostData(String player, String serverFrom, String serverTo, String serverOn, String message) {
         JSONObject data = new JSONObject();
         data.put("player", player);
         data.put("serverFrom", serverFrom);
@@ -68,14 +45,14 @@ public class BroadcastManager {
         data.put("serverOn", serverOn);
         data.put("message", message);
         data.put("token", ConfigManager.getInstance().getBroadcastToken());
-        return data.toString().getBytes();
+        return data;
     }
 
-    private void broadcast(byte[] data, String path) {
+    private void broadcast(JSONObject data, String path) {
         for (String addr : ConfigManager.getInstance().getBroadcastServers()) {
             Thread thread = new Thread(() -> {
                 try {
-                    sendRequest("http://" + addr + path, data);
+                    Net.getInstance().postJSONRequest("http://" + addr + path, data);
                 } catch (IOException e) {
                     ProxyServer.getInstance().getLogger().severe("Fail connect to " + addr + path);
                 }
