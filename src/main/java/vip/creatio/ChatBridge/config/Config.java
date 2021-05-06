@@ -16,6 +16,7 @@ public class Config {
     private HashMap<String, String> serverNameMap;
     private int port;
     private String broadcastToken;
+    private int broadcastCancelTimeout;
     private List<String> broadcastServers;
     private List<String> ignoreRules;
     private List<String> blockWords;
@@ -67,7 +68,9 @@ public class Config {
 
             // broadcast
             broadcastToken = config.getString("broadcast.token");
-            chatBridge.getLogger().info("Set broadcast token to " + broadcastToken);
+            chatBridge.getLogger().info("Set broadcast token to \"" + broadcastToken + "\"");
+            broadcastCancelTimeout = config.getInt("broadcast.cancel_timeout");
+            chatBridge.getLogger().info("Set broadcast cancel timeout to " + broadcastCancelTimeout + "ms");
             broadcastServers = config.getStringList("broadcast.servers");
             broadcastServers.remove("host:port");
             displayList(chatBridge, "Set broadcast servers:", broadcastServers);
@@ -117,6 +120,10 @@ public class Config {
 
     public String getBroadcastToken() {
         return broadcastToken;
+    }
+
+    public int getBroadcastCancelTimeout() {
+        return broadcastCancelTimeout;
     }
 
     public List<String> getBroadcastServers() {

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.sun.net.httpserver.HttpServer;
 import vip.creatio.ChatBridge.config.ConfigManager;
 import vip.creatio.ChatBridge.event.ChatBridgeEventHandler;
+import vip.creatio.ChatBridge.manager.MessageManager;
 import vip.creatio.ChatBridge.tool.Net;
 
 import java.io.IOException;
@@ -41,10 +42,17 @@ public class Server {
                     ChatBridgeEventHandler.getInstance().onReceiveBroadcastSwitch(data);
                 }
             });
+            server.createContext("/chatTry", new BaseHandler());
             server.createContext("/chat", new BaseHandler() {
                 @Override
                 public void handleRequest(JSONObject data) {
                     ChatBridgeEventHandler.getInstance().onReceiveBroadcastChat(data);
+                }
+            });
+            server.createContext("/chatCancel", new BaseHandler() {
+                @Override
+                public void handleRequest(JSONObject data) {
+                    MessageManager.getInstance().cancelMessage(data.getInteger("messageId"));
                 }
             });
             server.createContext(ConfigManager.getInstance().getQqPath(), exchange -> {

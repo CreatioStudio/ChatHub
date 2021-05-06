@@ -5,6 +5,7 @@ import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.*;
 import vip.creatio.ChatBridge.config.ConfigManager;
+import vip.creatio.ChatBridge.manager.MessageManager;
 import vip.creatio.ChatBridge.manager.PlayerListManager;
 import vip.creatio.ChatBridge.qq.Bot;
 import vip.creatio.ChatBridge.qq.Info;
@@ -18,7 +19,6 @@ public class ChatBridgeEventHandler {
     private static final ChatBridgeEventHandler instance = new ChatBridgeEventHandler();
 
     private ChatBridgeEventHandler() {
-
     }
 
     public static ChatBridgeEventHandler getInstance() {
@@ -68,23 +68,33 @@ public class ChatBridgeEventHandler {
             }
         }
 
+        event.setCancelled(true);
+
         // Block
         for (String blockWord : ConfigManager.getInstance().getBlockWords()) {
             if (message.contains(blockWord)) {
                 Message.sendPrivateMessage(player, ConfigManager.getInstance().getBlockWordMessage(message, blockWord));
-                event.setCancelled(true);
                 return;
             }
         }
 
-        event.setCancelled(true);
-        Message.sendPublicMessage(ConfigManager.getInstance().getChatMessage(playerName, serverOn, message));
-        Net.broadcastEvent("/chat", playerName, "", "", serverOn, message);
-        if (ConfigManager.getInstance().isQqEnable() && ConfigManager.getInstance().isQqMessage()) {
-            String msg = ConfigManager.getInstance().getChatMessage(playerName, serverOn, message);
-            msg = msg.replaceAll("[&|§].", "");
-            Bot.getInstance().sendGroupMessageAll(ConfigManager.getInstance().getQqGroupId(), msg);
-        }
+        new Thread(() -> {
+            int messageId = MessageManager.getInstance().onChat();
+            Net.broadcastEvent("/chatTry", playerName, "", "", serverOn, message, messageId);
+            try {
+                Thread.sleep(ConfigManager.getInstance().getBroadcastCancelTimeout());
+            } catch (InterruptedException ignored) {
+            }
+            if (!MessageManager.getInstance().isCanceled(messageId)) {
+                Net.broadcastEvent("/chat", playerName, "", "", serverOn, message);
+                String msg = ConfigManager.getInstance().getChatMessage(playerName, serverOn, message);
+                Message.sendPublicMessage(msg);
+                if (ConfigManager.getInstance().isQqEnable() && ConfigManager.getInstance().isQqMessage()) {
+                    msg = msg.replaceAll("[&|§].", "");
+                    Bot.getInstance().sendGroupMessageAll(ConfigManager.getInstance().getQqGroupId(), msg);
+                }
+            }
+        }).start();
     }
 
     public void onReceiveBroadcastJoin(JSONObject data) {
