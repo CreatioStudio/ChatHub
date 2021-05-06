@@ -14,14 +14,15 @@ public class QQManager {
     }
 
     public void onChat(String player, String serverOn, String message) {
+        if (!ConfigManager.getInstance().isQqEnable()) {
+            return;
+        }
         String msg = ConfigManager.getInstance().getMessage("chat").replace("{player}", player);
         msg = msg.replace("{serverOn}", ConfigManager.getInstance().getServerName(serverOn));
         msg = msg.replace("{message}", message);
         msg = msg.replaceAll("[&|§].", "");
-        if (ConfigManager.getInstance().isQqEnable() && ConfigManager.getInstance().isQqMessage()) {
-            for (int groupId : ConfigManager.getInstance().getQqGroupId()) {
-                Bot.getInstance().sendGroupMessage(groupId, msg);
-            }
+        for (int groupId : ConfigManager.getInstance().getQqGroupId()) {
+            Bot.getInstance().sendGroupMessage(groupId, msg);
         }
     }
 }
