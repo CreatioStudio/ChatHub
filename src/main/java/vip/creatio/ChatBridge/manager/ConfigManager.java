@@ -76,15 +76,15 @@ public class ConfigManager {
             chatBridge.getLogger().info("Set broadcast token to " + broadcastToken);
             broadcastServers = config.getStringList("broadcast.servers");
             broadcastServers.remove("host:port");
-            displayStringList(chatBridge, "Set broadcast servers:", broadcastServers);
+            displayList(chatBridge, "Set broadcast servers:", broadcastServers);
 
             // ignore_rules
             ignoreRules = config.getStringList("ignore_rules");
-            displayStringList(chatBridge, "Set ignore rules:", ignoreRules);
+            displayList(chatBridge, "Set ignore rules:", ignoreRules);
 
             // block_words
             blockWords = config.getStringList("block_words");
-            displayStringList(chatBridge, "Set block words:", blockWords);
+            displayList(chatBridge, "Set block words:", blockWords);
 
             // qq
             qqEnable = config.getBoolean("qq.enable");
@@ -96,13 +96,13 @@ public class ConfigManager {
             qqMessage = config.getBoolean("qq.message");
             chatBridge.getLogger().info("Set qq message to " + qqMessage);
             qqGroupId = config.getIntList("qq.group_id");
-            displayStringList(chatBridge, "Set qq group id:", qqGroupId);
+            displayList(chatBridge, "Set qq group id:", qqGroupId);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public <E> void displayStringList(ChatBridge chatBridge, String title, List<E> list) {
+    public <E> void displayList(ChatBridge chatBridge, String title, List<E> list) {
         chatBridge.getLogger().info(title);
         for (E i : list) {
             chatBridge.getLogger().info("  - " + i);
