@@ -4,8 +4,8 @@ message:
   leave: '§8[§c-§8] §e{player}'
   switch: '§8[§b❖§8] §e{player}§r: §7«{serverFrom}§7» §6➟ §7«{serverTo}§7»'
   chat: '§7[{serverOn}§7]§e{player}§r: {message}'
-  block_word: '§c你的消息 "{message}" 被禁止了，因为包含敏感词 "{blockWord}"'
-  list: '在线玩家共{playerCount}人，玩家列表：{playerList}'
+  block_word: '§8§l» §c你的消息 "{message}" 被禁止发送, 因为包含敏感词 "{blockWord}"'
+  list: '§8§l» §7当前共有§6{playerCount}§7名玩家在线: §e{playerList}'
 
 # HttpServer ID and HttpServer Name map, name will be display in message
 server_name:
@@ -17,6 +17,7 @@ port: 51800
 # Broadcast option, set this to broadcast message with other BungeeCord or server
 broadcast:
   token: 'token'
+  cancel_timeout: 50
   servers:
     - 'host:port'
 

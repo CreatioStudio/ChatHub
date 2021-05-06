@@ -3,6 +3,7 @@ package vip.creatio.ChatBridge.tool;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.sun.net.httpserver.HttpExchange;
+import net.md_5.bungee.api.ProxyServer;
 import vip.creatio.ChatBridge.config.ConfigManager;
 
 import java.io.DataOutputStream;
@@ -48,7 +49,7 @@ public class Net {
             headers.put("Content-Type", "application/json");
             post(url, headers, data.toString().getBytes());
         } catch (IOException e) {
-            e.printStackTrace();
+            ProxyServer.getInstance().getLogger().severe("Fail post data to "+ url);
         }
     }
 
@@ -77,12 +78,18 @@ public class Net {
     }
 
     public static void broadcastEvent(String path, String player, String serverFrom, String serverTo, String serverOn, String message) {
+        broadcastEvent(path, player, serverFrom, serverTo, serverOn, message, -1);
+    }
+
+    public static void broadcastEvent(String path, String player, String serverFrom, String serverTo, String serverOn, String message, int messageId) {
         JSONObject data = new JSONObject();
+        data.put("path", path);
         data.put("player", player);
         data.put("serverFrom", serverFrom);
         data.put("serverTo", serverTo);
         data.put("serverOn", serverOn);
         data.put("message", message);
+        data.put("messageId", messageId);
         data.put("token", ConfigManager.getInstance().getBroadcastToken());
         new Thread(() -> {
             for (String addr : ConfigManager.getInstance().getBroadcastServers()) {
