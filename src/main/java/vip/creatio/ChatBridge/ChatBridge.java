@@ -1,22 +1,22 @@
 package vip.creatio.ChatBridge;
 
 import net.md_5.bungee.api.plugin.Plugin;
-import vip.creatio.ChatBridge.manager.ConfigManager;
-import vip.creatio.ChatBridge.manager.BroadcastManager;
-import vip.creatio.ChatBridge.event.EventListener;
+import vip.creatio.ChatBridge.server.Server;
+import vip.creatio.ChatBridge.config.ConfigManager;
+import vip.creatio.ChatBridge.event.BungeeEventListener;
 import vip.creatio.ChatBridge.command.ChatCommand;
 
 public final class ChatBridge extends Plugin {
     @Override
     public void onEnable() {
         ConfigManager.getInstance().loadConfig(this);
-        BroadcastManager.getInstance().startServer();
-        getProxy().getPluginManager().registerListener(this, new EventListener());
+        Server.getInstance().startServer();
+        getProxy().getPluginManager().registerListener(this, new BungeeEventListener());
         getProxy().getPluginManager().registerCommand(this, new ChatCommand());
     }
 
     @Override
     public void onDisable() {
-        BroadcastManager.getInstance().stopServer();
+        Server.getInstance().stopServer();
     }
 }

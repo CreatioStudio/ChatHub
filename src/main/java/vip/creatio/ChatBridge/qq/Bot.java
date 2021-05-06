@@ -1,11 +1,10 @@
 package vip.creatio.ChatBridge.qq;
 
 import com.alibaba.fastjson.JSONObject;
-import net.md_5.bungee.api.ProxyServer;
-import vip.creatio.ChatBridge.manager.ConfigManager;
+import vip.creatio.ChatBridge.config.ConfigManager;
 import vip.creatio.ChatBridge.tool.Net;
 
-import java.io.IOException;
+import java.util.List;
 
 public class Bot {
     private static final Bot instance = new Bot();
@@ -18,17 +17,26 @@ public class Bot {
     }
 
     public void useAPI(String url, JSONObject data) {
-        new Thread(() -> {
-            try {
-                Net.getInstance().postJSONRequest(url, data);
-            } catch (IOException e) {
-                ProxyServer.getInstance().getLogger().severe("Cannot use api " + url);
-            }
-        }).start();
+        new Thread(() -> Net.postJSONRequest(url, data)).start();
     }
 
     public String getAPIUrl(String name) {
         return ConfigManager.getInstance().getQqApiURL() + name;
+    }
+
+    public void reply(Info info, String message) {
+        if (info.source_type.equals("private")) {
+            sendPrivateMessage(info.source_id, message);
+        } else if (info.source_type.equals("group")) {
+            sendGroupMessage(info.source_id, message);
+        }
+    }
+
+    public void sendPrivateMessage(int userId, String message) {
+        JSONObject data = new JSONObject();
+        data.put("user_id", userId);
+        data.put("message", message);
+        useAPI(getAPIUrl("/send_private_msg"), data);
     }
 
     public void sendGroupMessage(int groupId, String message) {
@@ -36,5 +44,11 @@ public class Bot {
         data.put("group_id", groupId);
         data.put("message", message);
         useAPI(getAPIUrl("/send_group_msg"), data);
+    }
+
+    public void sendGroupMessageAll(List<Integer> groupIdList, String message) {
+        for (int groupId : groupIdList) {
+            sendGroupMessage(groupId, message);
+        }
     }
 }
