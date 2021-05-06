@@ -16,11 +16,16 @@ public class ConfigManager {
     private static final ConfigManager instance = new ConfigManager();
     private HashMap<String, String> message;
     private HashMap<String, String> serverNameMap;
-    private int broadcastPort;
+    private int port;
     private String broadcastToken;
     private List<String> broadcastServers;
     private List<String> ignoreRules;
     private List<String> blockWords;
+    private boolean qqEnable;
+    private String qqPath;
+    private String qqApiURL;
+    private boolean qqMessage;
+    private List<Integer> qqGroupId;
 
     private ConfigManager() {
     }
@@ -62,9 +67,11 @@ public class ConfigManager {
                 chatBridge.getLogger().info("  - " + serverId + " : " + serverName);
             }
 
+            // port
+            port = config.getInt("port");
+            chatBridge.getLogger().info("Set http server port to " + port);
+
             // broadcast
-            broadcastPort = config.getInt("broadcast.port");
-            chatBridge.getLogger().info("Set broadcast port to " + broadcastPort);
             broadcastToken = config.getString("broadcast.token");
             chatBridge.getLogger().info("Set broadcast token to " + broadcastToken);
             broadcastServers = config.getStringList("broadcast.servers");
@@ -79,14 +86,25 @@ public class ConfigManager {
             blockWords = config.getStringList("block_words");
             displayStringList(chatBridge, "Set block words:", blockWords);
 
+            // qq
+            qqEnable = config.getBoolean("qq.enable");
+            chatBridge.getLogger().info("Set qq enable to " + qqEnable);
+            qqPath = config.getString("qq.path");
+            chatBridge.getLogger().info("Set qq path to " + qqPath);
+            qqApiURL = config.getString("qq.api_url");
+            chatBridge.getLogger().info("Set qq api url to " + qqApiURL);
+            qqMessage = config.getBoolean("qq.message");
+            chatBridge.getLogger().info("Set qq message to " + qqMessage);
+            qqGroupId = config.getIntList("qq.group_id");
+            displayStringList(chatBridge, "Set qq group id:", qqGroupId);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void displayStringList(ChatBridge chatBridge, String title, List<String> list) {
+    public <E> void displayStringList(ChatBridge chatBridge, String title, List<E> list) {
         chatBridge.getLogger().info(title);
-        for (String i : list) {
+        for (E i : list) {
             chatBridge.getLogger().info("  - " + i);
         }
     }
@@ -100,8 +118,8 @@ public class ConfigManager {
         return message.get(key);
     }
 
-    public int getBroadcastPort() {
-        return broadcastPort;
+    public int getPort() {
+        return port;
     }
 
     public String getBroadcastToken() {
@@ -118,5 +136,25 @@ public class ConfigManager {
 
     public List<String> getBlockWords() {
         return blockWords;
+    }
+
+    public boolean isQqEnable() {
+        return qqEnable;
+    }
+
+    public String getQqPath() {
+        return qqPath;
+    }
+
+    public String getQqApiURL() {
+        return qqApiURL;
+    }
+
+    public boolean isQqMessage() {
+        return qqMessage;
+    }
+
+    public List<Integer> getQqGroupId() {
+        return qqGroupId;
     }
 }
