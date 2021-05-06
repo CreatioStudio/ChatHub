@@ -68,6 +68,8 @@ public class EventListener implements Listener {
         String serverOn = player.getServer().getInfo().getName();
         MessageManager.getInstance().onChat(playerName, serverOn, message);
         BroadcastManager.getInstance().onChat(playerName, serverOn, message);
-        QQManager.getInstance().onChat(playerName, serverOn, message);
+        if (ConfigManager.getInstance().isQqMessage()) {
+            QQManager.getInstance().onChat(playerName, serverOn, message);
+        }
     }
 }
