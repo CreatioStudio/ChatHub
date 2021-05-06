@@ -2,6 +2,7 @@ package vip.creatio.ChatBridge.qq;
 
 import vip.creatio.ChatBridge.manager.ConfigManager;
 import vip.creatio.ChatBridge.manager.MessageManager;
+import vip.creatio.ChatBridge.manager.PlayerListManager;
 
 public class Handler {
     private static final Handler instance = new Handler();
@@ -20,7 +21,11 @@ public class Handler {
     }
 
     public void onCommand(Info info) {
-        if (info.content.startsWith("/mc")) {
+        String[] command = info.content.split("/s+");
+        if (command[0].equals("/list")) {
+            String message = "在线玩家共" + PlayerListManager.getInstance().getPlayerList().toArray().length + "人，玩家列表: " + PlayerListManager.getInstance().getStringPlayerList();
+            Bot.getInstance().sendGroupMessage(info.source_id, message);
+        } else if (command[0].equals("/mc")) {
             MessageManager.getInstance().onQqChat(info.sender_name, info.content.replace("/mc ", ""));
         }
     }

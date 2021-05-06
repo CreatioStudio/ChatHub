@@ -9,6 +9,7 @@ import vip.creatio.ChatBridge.advancedban.AdvancedBan;
 import vip.creatio.ChatBridge.manager.BroadcastManager;
 import vip.creatio.ChatBridge.manager.ConfigManager;
 import vip.creatio.ChatBridge.manager.MessageManager;
+import vip.creatio.ChatBridge.manager.PlayerListManager;
 import vip.creatio.ChatBridge.qq.Bot;
 import vip.creatio.ChatBridge.qq.QQManager;
 
@@ -18,6 +19,7 @@ public class EventListener implements Listener {
     @EventHandler
     public void onPostLogin(PostLoginEvent event) {
         String player = event.getPlayer().getName();
+        PlayerListManager.getInstance().join(player);
         MessageManager.getInstance().onJoin(player);
         BroadcastManager.getInstance().onJoin(player);
     }
@@ -25,6 +27,7 @@ public class EventListener implements Listener {
     @EventHandler
     public void onPlayerDisconnect(PlayerDisconnectEvent event) {
         String player = event.getPlayer().getName();
+        PlayerListManager.getInstance().leave(player);
         MessageManager.getInstance().onLeave(player);
         BroadcastManager.getInstance().onLeave(player);
     }
