@@ -22,11 +22,12 @@ public class BroadcastManager {
 
     public void startServer() {
         try {
-            server = HttpServer.create(new InetSocketAddress(ConfigManager.getInstance().getBroadcastPort()), 0);
+            server = HttpServer.create(new InetSocketAddress(ConfigManager.getInstance().getPort()), 0);
             server.createContext("/join", new JoinHandler());
             server.createContext("/leave", new LeaveHandler());
             server.createContext("/switch", new SwitchHandler());
             server.createContext("/chat", new ChatHandler());
+            server.createContext(ConfigManager.getInstance().getQqPath(), new QQHandler());
             server.start();
         } catch (IOException e) {
             e.printStackTrace();

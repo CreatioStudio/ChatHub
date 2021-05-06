@@ -9,6 +9,8 @@ import vip.creatio.ChatBridge.advancedban.AdvancedBan;
 import vip.creatio.ChatBridge.manager.BroadcastManager;
 import vip.creatio.ChatBridge.manager.ConfigManager;
 import vip.creatio.ChatBridge.manager.MessageManager;
+import vip.creatio.ChatBridge.qq.Bot;
+import vip.creatio.ChatBridge.qq.QQManager;
 
 import java.util.regex.Pattern;
 
@@ -63,5 +65,6 @@ public class EventListener implements Listener {
         String serverOn = player.getServer().getInfo().getName();
         MessageManager.getInstance().onChat(playerName, serverOn, message);
         BroadcastManager.getInstance().onChat(playerName, serverOn, message);
+        QQManager.getInstance().onChat(playerName, serverOn, message);
     }
 }

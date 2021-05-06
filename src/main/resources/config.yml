@@ -4,15 +4,18 @@ message:
   leave: '§8[§c-§8] §e{player}'
   switch: '§8[§b❖§8] §e{player}§r: §7«{serverFrom}§7» §6➟ §7«{serverTo}§7»'
   chat: '§7[{serverOn}§7]§e{player}§r: {message}'
-  block_word: '§cYour message "{message}" was blocked, because it contains the word {blockWord}"'
+  qq_chat: '§7[§5QQ§7]§e{user}§r: {message}'
+  block_word: '§cYour message "{message}" was blocked, because it contains the word "{blockWord}"'
 
 # Server ID and Server Name map, name will be display in message
 server_name:
   serverID: 'serverName'
 
+# Http server port, it will use on broadcast and qq
+port: 51800
+
 # Broadcast option, set this to broadcast message with other BungeeCord or server
 broadcast:
-  port: 51800
   token: 'token'
   servers:
     - 'host:port'
@@ -24,3 +27,12 @@ ignore_rules:
 # Block words, a chat message will be blocked if it's include following words
 block_words:
   - 'Hello'
+
+# QQ
+qq:
+  enable: false
+  path: '/qq'
+  api_url: 'http://localhost:5700'
+  message: false
+  group_id:
+    - 123123123

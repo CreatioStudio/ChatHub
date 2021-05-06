@@ -46,6 +46,13 @@ public class MessageManager {
         sendPublicMessage(msg);
     }
 
+    public void onQqChat(String user, String message) {
+        String msg = ConfigManager.getInstance().getMessage("qq_chat");
+        msg = msg.replace("{user}", user);
+        msg = msg.replace("{message}", message);
+        sendPublicMessage(msg);
+    }
+
     public void onBlockWord(ProxiedPlayer player, String message, String blockWord) {
         String msg = ConfigManager.getInstance().getMessage("block_word");
         msg = msg.replace("{message}", message);
