@@ -13,6 +13,7 @@ import vip.creatio.ChatBridge.tool.AdvancedBan;
 import vip.creatio.ChatBridge.tool.Message;
 import vip.creatio.ChatBridge.tool.Net;
 
+import java.util.Arrays;
 import java.util.regex.Pattern;
 
 public class ChatBridgeEventHandler {
@@ -95,6 +96,26 @@ public class ChatBridgeEventHandler {
                 }
             }
         }).start();
+    }
+
+    public void onTabComplete(TabCompleteEvent event) {
+        String[] args = event.getCursor().split(" ");
+        System.out.println(Arrays.toString(args));
+        if (args[0].equals("/chat")) {
+            if (args.length == 1) {
+                event.getSuggestions().addAll(Arrays.asList("list", "msg", "qq"));
+            } else if (args[1].equals("msg")) {
+                if (args.length == 2 && event.getCursor().startsWith("/chat msg ")) {
+                    event.getSuggestions().addAll(PlayerListManager.getInstance().getPlayerList());
+                } else if (args.length >= 3) {
+                    event.getSuggestions().add("<msg>");
+                }
+            } else if (args[1].equals("qq")) {
+                if (args.length == 2 && event.getCursor().startsWith("/chat qq ")) {
+                    event.getSuggestions().add("<msg>");
+                }
+            }
+        }
     }
 
     public void onReceiveBroadcastJoin(JSONObject data) {

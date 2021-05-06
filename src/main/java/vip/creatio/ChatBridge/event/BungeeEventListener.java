@@ -24,4 +24,9 @@ public class BungeeEventListener implements Listener {
     public void onChat(ChatEvent event) {
         ChatBridgeEventHandler.getInstance().onChat(event);
     }
+
+    @EventHandler
+    public void onTabComplete(TabCompleteEvent event) {
+        ChatBridgeEventHandler.getInstance().onTabComplete(event);
+    }
 }
