@@ -15,7 +15,9 @@ public class PlayerListManager {
 
 
     public void join(String player) {
-        playerList.add(player);
+        if (!playerList.contains(player)) {
+            playerList.add(player);
+        }
     }
 
     public void leave(String player) {
