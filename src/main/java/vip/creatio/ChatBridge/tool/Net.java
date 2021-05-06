@@ -3,6 +3,7 @@ package vip.creatio.ChatBridge.tool;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.sun.net.httpserver.HttpExchange;
+import vip.creatio.ChatBridge.config.ConfigManager;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -16,16 +17,7 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Net {
-    private static final Net instance = new Net();
-
-    private Net() {
-    }
-
-    public static Net getInstance() {
-        return instance;
-    }
-
-    public HttpURLConnection getConnection(String url, String method) throws IOException {
+    public static HttpURLConnection getConnection(String url, String method) throws IOException {
         HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
         connection.setRequestMethod(method);
         connection.setDoOutput(true);
@@ -37,7 +29,7 @@ public class Net {
         return connection;
     }
 
-    public void post(String url, Map<String, String> headers, byte[] data) throws IOException {
+    public static void post(String url, Map<String, String> headers, byte[] data) throws IOException {
         HttpURLConnection connection = getConnection(url, "POST");
         for (String key : headers.keySet()) {
             connection.setRequestProperty(key, headers.get(key));
@@ -50,13 +42,17 @@ public class Net {
         connection.getInputStream();
     }
 
-    public void postJSONRequest(String url, JSONObject data) throws IOException {
-        Map<String,String > headers = new HashMap<>();
-        headers.put("Content-Type", "application/json");
-        post(url, headers, data.toString().getBytes());
+    public static void postJSONRequest(String url, JSONObject data) {
+        try {
+            Map<String, String> headers = new HashMap<>();
+            headers.put("Content-Type", "application/json");
+            post(url, headers, data.toString().getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public JSONObject parseData(InputStream inputStream) {
+    public static JSONObject parseData(InputStream inputStream) {
         StringBuilder dataString = new StringBuilder();
         try {
             Scanner scanner = new Scanner(inputStream);
@@ -70,7 +66,7 @@ public class Net {
         return JSON.parseObject(dataString.toString());
     }
 
-    public void sendResponse(HttpExchange exchange, String response) throws IOException {
+    public static void sendResponse(HttpExchange exchange, String response) throws IOException {
         JSONObject responseData = new JSONObject();
         responseData.put("message", response);
         response = responseData.toString();
@@ -78,5 +74,20 @@ public class Net {
         OutputStream os = exchange.getResponseBody();
         os.write(response.getBytes());
         os.close();
+    }
+
+    public static void broadcastEvent(String path, String player, String serverFrom, String serverTo, String serverOn, String message) {
+        JSONObject data = new JSONObject();
+        data.put("player", player);
+        data.put("serverFrom", serverFrom);
+        data.put("serverTo", serverTo);
+        data.put("serverOn", serverOn);
+        data.put("message", message);
+        data.put("token", ConfigManager.getInstance().getBroadcastToken());
+        new Thread(() -> {
+            for (String addr : ConfigManager.getInstance().getBroadcastServers()) {
+                Net.postJSONRequest("http://" + addr + path, data);
+            }
+        }).start();
     }
 }

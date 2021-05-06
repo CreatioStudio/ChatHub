@@ -4,12 +4,12 @@ message:
   leave: '§8[§c-§8] §e{player}'
   switch: '§8[§b❖§8] §e{player}§r: §7«{serverFrom}§7» §6➟ §7«{serverTo}§7»'
   chat: '§7[{serverOn}§7]§e{player}§r: {message}'
-  qq_chat: '§7[§5QQ§7]§e{user}§r: {message}'
-  block_word: '§cYour message "{message}" was blocked, because it contains the word "{blockWord}"'
+  block_word: '§c你的消息 "{message}" 被禁止了，因为包含敏感词 "{blockWord}"'
+  list: '在线玩家共{playerCount}人，玩家列表：{playerList}'
 
-# Server ID and Server Name map, name will be display in message
+# HttpServer ID and HttpServer Name map, name will be display in message
 server_name:
-  serverID: 'serverName'
+  qq: '§5§l群聊天'
 
 # Http server port, it will use on broadcast and qq
 port: 51800

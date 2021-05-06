@@ -1,4 +1,4 @@
-package vip.creatio.ChatBridge.manager;
+package vip.creatio.ChatBridge.config;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,10 +11,8 @@ import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 
-
-public class ConfigManager {
-    private static final ConfigManager instance = new ConfigManager();
-    private HashMap<String, String> message;
+public class Config {
+    private HashMap<String, String> messageMap;
     private HashMap<String, String> serverNameMap;
     private int port;
     private String broadcastToken;
@@ -27,11 +25,7 @@ public class ConfigManager {
     private boolean qqMessage;
     private List<Integer> qqGroupId;
 
-    private ConfigManager() {
-    }
-
-    public static ConfigManager getInstance() {
-        return instance;
+    protected Config() {
     }
 
     public void loadConfig(ChatBridge chatBridge) {
@@ -49,11 +43,11 @@ public class ConfigManager {
 
             // message
             Configuration messageConfiguration = (Configuration) config.get("message");
-            message = new HashMap<>();
+            messageMap = new HashMap<>();
             chatBridge.getLogger().info("Set message:");
             for (String event : messageConfiguration.getKeys()) {
                 String messageString = messageConfiguration.get(event).toString();
-                message.put(event, messageString);
+                messageMap.put(event, messageString);
                 chatBridge.getLogger().info("  - " + event + " : " + messageString);
             }
 
@@ -109,13 +103,12 @@ public class ConfigManager {
         }
     }
 
-    public String getServerName(String serverId) {
-        String serverName = serverNameMap.get(serverId);
-        return serverName == null ? serverId : serverName;
+    public HashMap<String, String> getMessageMap() {
+        return messageMap;
     }
 
-    public String getMessage(String key) {
-        return message.get(key);
+    public HashMap<String, String> getServerNameMap() {
+        return serverNameMap;
     }
 
     public int getPort() {

@@ -7,7 +7,6 @@ public class PlayerListManager {
     private final LinkedList<String> playerList = new LinkedList<>();
 
     private PlayerListManager() {
-
     }
 
     public static PlayerListManager getInstance() {

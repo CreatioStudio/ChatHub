@@ -1,22 +1,22 @@
-package vip.creatio.ChatBridge.broadcast;
+package vip.creatio.ChatBridge.server;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import vip.creatio.ChatBridge.manager.ConfigManager;
+import vip.creatio.ChatBridge.config.ConfigManager;
 import vip.creatio.ChatBridge.tool.Net;
 
 class BaseHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) {
         try {
-            JSONObject data = Net.getInstance().parseData(exchange.getRequestBody());
+            JSONObject data = Net.parseData(exchange.getRequestBody());
             String token = data.getString("token");
             if (token != null && token.equals(ConfigManager.getInstance().getBroadcastToken())) {
                 handleRequest(data);
-                Net.getInstance().sendResponse(exchange, "OK");
+                Net.sendResponse(exchange, "OK");
             } else {
-                Net.getInstance().sendResponse(exchange, "Error Token");
+                Net.sendResponse(exchange, "Error Token");
             }
         } catch (Exception e) {
             e.printStackTrace();
