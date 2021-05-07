@@ -16,6 +16,22 @@
 - QQ互通
 - 敏感词屏蔽
 
+## 指令
+
+### 游戏内指令
+
+| 指令 | 功能 |
+| - | - |
+| /chat list | 查看所有服务器的玩家列表 |
+| /chat msg <name> <msg> | 向玩家发送私聊消息 |
+| /chat qq <msg> | 向 QQ 发送消息 |
+
+### QQ 指令
+
+| 指令 | 功能 |
+| - | - |
+| /mc <msg> | 向游戏内发送消息 |
+
 ## 配置文件
 
 配置文件为 `plugins/ChatBridge/config.yml`

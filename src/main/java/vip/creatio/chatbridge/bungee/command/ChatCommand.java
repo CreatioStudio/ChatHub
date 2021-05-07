@@ -21,7 +21,9 @@ public class ChatCommand extends Command {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if ("reload".equals(args[0])) {
+        if (args.length == 0) {
+            sender.sendMessage(new TextComponent("§8§l» §cUnknown command"));
+        } else if ("reload".equals(args[0])) {
             ChatBridge chatBridge = (ChatBridge) ProxyServer.getInstance().getPluginManager().getPlugin("ChatBridge");
             ConfigManager.getInstance().loadConfig(chatBridge);
             sender.sendMessage(new TextComponent("§8§l» §7Reload config success"));
@@ -51,15 +53,17 @@ public class ChatCommand extends Command {
             if (isProxiedPlayer(sender)) {
                 if (args.length < 2) {
                     sender.sendMessage(new TextComponent("§8§l» §cUsage /qq <msg>"));
-                    return;
+                } else if (!ConfigManager.getInstance().isQqEnable()) {
+                    sender.sendMessage(new TextComponent("§8§l» §cQQ is not enabled"));
+                } else {
+                    ProxiedPlayer player = (ProxiedPlayer) sender;
+                    String playerName = player.getName();
+                    String serverName = player.getServer().getInfo().getName();
+                    String rawMessage = String.join(" ", Arrays.asList(args).subList(1, args.length));
+                    String message = ConfigManager.getInstance().getChatMessage(playerName, serverName, rawMessage);
+                    message = message.replaceAll("[&|§].", "");
+                    Bot.getInstance().sendGroupMessageAll(ConfigManager.getInstance().getQqGroupId(), message);
                 }
-                ProxiedPlayer player = (ProxiedPlayer) sender;
-                String playerName = player.getName();
-                String serverName = player.getServer().getInfo().getName();
-                String rawMessage = String.join(" ", Arrays.asList(args).subList(1, args.length));
-                String message = ConfigManager.getInstance().getChatMessage(playerName, serverName, rawMessage);
-                message = message.replaceAll("[&|§].", "");
-                Bot.getInstance().sendGroupMessageAll(ConfigManager.getInstance().getQqGroupId(), message);
             }
         }
     }
