@@ -1,4 +1,4 @@
-package vip.creatio.chatbridge.qq;
+package vip.creatio.chatbridge.bungee.qq;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;

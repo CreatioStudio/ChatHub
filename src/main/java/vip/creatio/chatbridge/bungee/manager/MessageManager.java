@@ -1,4 +1,4 @@
-package vip.creatio.chatbridge.manager;
+package vip.creatio.chatbridge.bungee.manager;
 
 import java.util.HashMap;
 

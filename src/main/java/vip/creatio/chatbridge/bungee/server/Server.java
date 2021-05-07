@@ -1,9 +1,9 @@
-package vip.creatio.chatbridge.server;
+package vip.creatio.chatbridge.bungee.server;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sun.net.httpserver.HttpServer;
-import vip.creatio.chatbridge.config.ConfigManager;
-import vip.creatio.chatbridge.event.ChatBridgeEventHandler;
+import vip.creatio.chatbridge.bungee.config.ConfigManager;
+import vip.creatio.chatbridge.bungee.event.ChatBridgeEventHandler;
 import vip.creatio.chatbridge.tool.Net;
 
 import java.io.IOException;
