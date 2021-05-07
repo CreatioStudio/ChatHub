@@ -19,6 +19,9 @@ public class OnlinePlayerListManager {
 
     public void init() {
         for (String serverId : ConfigManager.getInstance().getServerNameMap().keySet()) {
+            if (serverId.equals("qq")) {
+                continue;
+            }
             serverOnlinePlayerMap.put(serverId, new ArrayList<>());
         }
     }
@@ -63,9 +66,6 @@ public class OnlinePlayerListManager {
 
     public String getStringServerPlayerList() {
         StringBuilder stringList = new StringBuilder();
-        if (getOnlinePlayerList().isEmpty()) {
-            return ConfigManager.getInstance().getListMessage("", new ArrayList<>());
-        }
         HashMap<String, ArrayList<String>> playerMap = getServerOnlinePlayerMap();
         for (String serverId : playerMap.keySet()) {
             String serverName = ConfigManager.getInstance().getServerName(serverId);
