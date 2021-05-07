@@ -1,6 +1,6 @@
-package vip.creatio.chatbridge.config;
+package vip.creatio.chatbridge.bungee.config;
 
-import vip.creatio.chatbridge.manager.OnlinePlayerListManager;
+import vip.creatio.chatbridge.bungee.manager.OnlinePlayerListManager;
 
 import java.util.HashMap;
 import java.util.List;

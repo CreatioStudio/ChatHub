@@ -4,8 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.sun.net.httpserver.HttpExchange;
 import net.md_5.bungee.api.ProxyServer;
-import vip.creatio.chatbridge.config.ConfigManager;
-import vip.creatio.chatbridge.manager.MessageManager;
+import vip.creatio.chatbridge.bungee.config.ConfigManager;
+import vip.creatio.chatbridge.bungee.manager.MessageManager;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
