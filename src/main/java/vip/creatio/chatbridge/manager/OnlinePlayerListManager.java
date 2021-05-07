@@ -1,6 +1,6 @@
-package vip.creatio.ChatBridge.manager;
+package vip.creatio.chatbridge.manager;
 
-import vip.creatio.ChatBridge.config.ConfigManager;
+import vip.creatio.chatbridge.config.ConfigManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;

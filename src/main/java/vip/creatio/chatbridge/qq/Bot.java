@@ -1,8 +1,8 @@
-package vip.creatio.ChatBridge.qq;
+package vip.creatio.chatbridge.qq;
 
 import com.alibaba.fastjson.JSONObject;
-import vip.creatio.ChatBridge.config.ConfigManager;
-import vip.creatio.ChatBridge.tool.Net;
+import vip.creatio.chatbridge.config.ConfigManager;
+import vip.creatio.chatbridge.tool.Net;
 
 import java.util.List;
 

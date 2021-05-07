@@ -1,4 +1,4 @@
-package vip.creatio.ChatBridge.event;
+package vip.creatio.chatbridge.event;
 
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;

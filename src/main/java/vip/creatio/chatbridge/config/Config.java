@@ -1,4 +1,4 @@
-package vip.creatio.ChatBridge.config;
+package vip.creatio.chatbridge.config;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,7 +6,7 @@ import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.List;
 
-import vip.creatio.ChatBridge.ChatBridge;
+import vip.creatio.chatbridge.ChatBridge;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;

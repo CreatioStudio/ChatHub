@@ -1,11 +1,11 @@
-package vip.creatio.ChatBridge.server;
+package vip.creatio.chatbridge.server;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sun.net.httpserver.HttpServer;
-import vip.creatio.ChatBridge.config.ConfigManager;
-import vip.creatio.ChatBridge.event.ChatBridgeEventHandler;
-import vip.creatio.ChatBridge.manager.MessageManager;
-import vip.creatio.ChatBridge.tool.Net;
+import vip.creatio.chatbridge.config.ConfigManager;
+import vip.creatio.chatbridge.event.ChatBridgeEventHandler;
+import vip.creatio.chatbridge.manager.MessageManager;
+import vip.creatio.chatbridge.tool.Net;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
