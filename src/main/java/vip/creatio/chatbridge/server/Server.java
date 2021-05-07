@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.sun.net.httpserver.HttpServer;
 import vip.creatio.chatbridge.config.ConfigManager;
 import vip.creatio.chatbridge.event.ChatBridgeEventHandler;
-import vip.creatio.chatbridge.manager.MessageManager;
 import vip.creatio.chatbridge.tool.Net;
 
 import java.io.IOException;
@@ -26,48 +25,43 @@ public class Server {
             server = HttpServer.create(new InetSocketAddress(ConfigManager.getInstance().getPort()), 0);
             server.createContext("/join", new BaseHandler() {
                 @Override
-                public void handleRequest(JSONObject data) {
+                public boolean handleRequest(JSONObject data) {
                     ChatBridgeEventHandler.getInstance().onReceiveBroadcastJoin(data);
+                    return false;
                 }
             });
             server.createContext("/leave", new BaseHandler() {
                 @Override
-                public void handleRequest(JSONObject data) {
+                public boolean handleRequest(JSONObject data) {
                     ChatBridgeEventHandler.getInstance().onReceiveBroadcastLeave(data);
+                    return false;
                 }
             });
             server.createContext("/switch", new BaseHandler() {
                 @Override
-                public void handleRequest(JSONObject data) {
+                public boolean handleRequest(JSONObject data) {
                     ChatBridgeEventHandler.getInstance().onReceiveBroadcastSwitch(data);
+                    return false;
                 }
             });
             server.createContext("/chatTry", new BaseHandler());
             server.createContext("/chat", new BaseHandler() {
                 @Override
-                public void handleRequest(JSONObject data) {
+                public boolean handleRequest(JSONObject data) {
                     ChatBridgeEventHandler.getInstance().onReceiveBroadcastChat(data);
-                }
-            });
-            server.createContext("/chatCancel", new BaseHandler() {
-                @Override
-                public void handleRequest(JSONObject data) {
-                    MessageManager.getInstance().cancelMessage(data.getInteger("messageId"));
+                    return false;
                 }
             });
             server.createContext("/msg", new BaseHandler() {
                 @Override
-                public void handleRequest(JSONObject data) {
+                public boolean handleRequest(JSONObject data) {
                     ChatBridgeEventHandler.getInstance().onReceiveBroadcastMsg(data);
+                    return false;
                 }
             });
             server.createContext(ConfigManager.getInstance().getQqPath(), exchange -> {
-                try {
-                    ChatBridgeEventHandler.getInstance().onReceiveQQPost(Net.parseData(exchange.getRequestBody()));
-                    Net.sendResponse(exchange, "");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                ChatBridgeEventHandler.getInstance().onReceiveQQPost(Net.parseData(exchange.getRequestBody()));
+                Net.sendResponse(exchange, "");
             });
             server.start();
         } catch (IOException e) {

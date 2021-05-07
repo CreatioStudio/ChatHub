@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.sun.net.httpserver.HttpExchange;
 import net.md_5.bungee.api.ProxyServer;
 import vip.creatio.chatbridge.config.ConfigManager;
+import vip.creatio.chatbridge.manager.MessageManager;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -18,41 +19,6 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Net {
-    public static HttpURLConnection getConnection(String url, String method) throws IOException {
-        HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
-        connection.setRequestMethod(method);
-        connection.setDoOutput(true);
-        connection.setDoInput(true);
-        connection.setUseCaches(false);
-        connection.setInstanceFollowRedirects(true);
-        connection.setConnectTimeout(1000);
-        connection.setReadTimeout(1000);
-        return connection;
-    }
-
-    public static void post(String url, Map<String, String> headers, byte[] data) throws IOException {
-        HttpURLConnection connection = getConnection(url, "POST");
-        for (String key : headers.keySet()) {
-            connection.setRequestProperty(key, headers.get(key));
-        }
-        connection.connect();
-        DataOutputStream dataOutputStream = new DataOutputStream(connection.getOutputStream());
-        dataOutputStream.write(data);
-        dataOutputStream.flush();
-        dataOutputStream.close();
-        connection.getInputStream();
-    }
-
-    public static void postJSONRequest(String url, JSONObject data) {
-        try {
-            Map<String, String> headers = new HashMap<>();
-            headers.put("Content-Type", "application/json");
-            post(url, headers, data.toString().getBytes());
-        } catch (IOException e) {
-            ProxyServer.getInstance().getLogger().severe("Fail post data to " + url);
-        }
-    }
-
     public static JSONObject parseData(InputStream inputStream) {
         StringBuilder dataString = new StringBuilder();
         try {
@@ -67,14 +33,58 @@ public class Net {
         return JSON.parseObject(dataString.toString());
     }
 
-    public static void sendResponse(HttpExchange exchange, String response) throws IOException {
-        JSONObject responseData = new JSONObject();
-        responseData.put("message", response);
-        response = responseData.toString();
-        exchange.sendResponseHeaders(200, response.getBytes().length);
-        OutputStream os = exchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
+    public static HttpURLConnection getConnection(String url, String method) throws IOException {
+        HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+        connection.setRequestMethod(method);
+        connection.setDoOutput(true);
+        connection.setDoInput(true);
+        connection.setUseCaches(false);
+        connection.setInstanceFollowRedirects(true);
+        connection.setConnectTimeout(1000);
+        connection.setReadTimeout(1000);
+        return connection;
+    }
+
+    public static JSONObject post(String url, Map<String, String> headers, byte[] data) throws IOException {
+        HttpURLConnection connection = getConnection(url, "POST");
+        for (String key : headers.keySet()) {
+            connection.setRequestProperty(key, headers.get(key));
+        }
+        connection.connect();
+        DataOutputStream dataOutputStream = new DataOutputStream(connection.getOutputStream());
+        dataOutputStream.write(data);
+        dataOutputStream.flush();
+        dataOutputStream.close();
+        return parseData(connection.getInputStream());
+    }
+
+    public static JSONObject postJSONRequest(String url, JSONObject data) {
+        try {
+            Map<String, String> headers = new HashMap<>();
+            headers.put("Content-Type", "application/json");
+            return post(url, headers, data.toString().getBytes());
+        } catch (IOException e) {
+            ProxyServer.getInstance().getLogger().severe("Fail post data to " + url);
+            return null;
+        }
+    }
+
+    public static void sendResponse(HttpExchange exchange, JSONObject responseData) {
+        try {
+            String response = responseData.toString();
+            exchange.sendResponseHeaders(200, response.getBytes().length);
+            OutputStream os = exchange.getResponseBody();
+            os.write(response.getBytes());
+            os.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void sendResponse(HttpExchange exchange, String responseString) {
+        JSONObject response = new JSONObject();
+        response.put("message", responseString);
+        sendResponse(exchange, response);
     }
 
     public static void broadcastEvent(String path, String player, String serverFrom, String serverTo, String serverOn, String message, int messageId, String target) {
@@ -90,7 +100,10 @@ public class Net {
         data.put("token", ConfigManager.getInstance().getBroadcastToken());
         new Thread(() -> {
             for (String addr : ConfigManager.getInstance().getBroadcastServers()) {
-                Net.postJSONRequest("http://" + addr + path, data);
+                JSONObject response = postJSONRequest("http://" + addr + path, data);
+                if (path.equals("/chatTry") && response != null && response.containsKey("cancel") && response.getBoolean("cancel")) {
+                    MessageManager.getInstance().cancelMessage(messageId);
+                }
             }
         }).start();
     }
