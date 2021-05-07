@@ -1,0 +1,5 @@
+# Http server port
+port: 51800
+
+# Broadcast token
+broadcast_token: 'token'
