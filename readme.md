@@ -16,6 +16,13 @@
 - QQ互通
 - 敏感词屏蔽
 
+## 安装
+
+1.在 Release 页面下载最新版插件，放入 Bungeecord 服务器的 `plugins` 文件夹内
+1.重启 Bungeecord
+1.修改 `plugins/ChatBridge/config.yml`
+1.使用 `chat reload` 指令重载配置文件
+
 ## 指令
 
 ### 游戏内指令
@@ -23,14 +30,14 @@
 | 指令 | 功能 |
 | - | - |
 | /chat list | 查看所有服务器的玩家列表 |
-| /chat msg <name> <msg> | 向玩家发送私聊消息 |
-| /chat qq <msg> | 向 QQ 发送消息 |
+| /chat msg \<name\> \<msg\> | 向玩家发送私聊消息 |
+| /chat qq \<msg\> | 向 QQ 发送消息 |
 
 ### QQ 指令
 
 | 指令 | 功能 |
 | - | - |
-| /mc <msg> | 向游戏内发送消息 |
+| /mc \<msg\> | 向游戏内发送消息 |
 
 ## 配置文件
 
@@ -155,7 +162,7 @@ QQ 机器人 API URL
 
 ## 提示
 
-- 在 Bukkit 中加载此插件，使 Bukkit 插件可以接收消息事件
+- 在 Bukkit 中加载此插件，使 Bukkit 插件可以接收消息事件，如箱子商店等
 
 ## 开发
 
