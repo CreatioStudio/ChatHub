@@ -1,8 +1,9 @@
 package vip.creatio.ChatBridge.config;
 
-import vip.creatio.ChatBridge.manager.PlayerListManager;
+import vip.creatio.ChatBridge.manager.OnlinePlayerListManager;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ConfigManager extends Config {
@@ -44,6 +45,20 @@ public class ConfigManager extends Config {
         return getFormattedMessage("chat", map);
     }
 
+    public String getMsgSenderMessage(String target, String message) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("{target}", target);
+        map.put("{message}", message.replace('&', '§'));
+        return getFormattedMessage("msg_sender", map);
+    }
+
+    public String getMsgTargetMessage(String sender, String message) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("{sender}", sender);
+        map.put("{message}", message.replace('&', '§'));
+        return getFormattedMessage("msg_target", map);
+    }
+
     public String getBlockWordMessage(String message, String blockWord) {
         HashMap<String, String> map = new HashMap<>();
         map.put("{message}", message);
@@ -51,10 +66,11 @@ public class ConfigManager extends Config {
         return getFormattedMessage("block_word", map);
     }
 
-    public String getListMessage() {
+    public String getListMessage(String serverOn, List<String> list) {
         HashMap<String, String> map = new HashMap<>();
-        map.put("{playerCount}", PlayerListManager.getInstance().getPlayerList().toArray().length + "");
-        map.put("{playerList}", PlayerListManager.getInstance().getStringPlayerList());
+        map.put("{serverOn}", serverOn);
+        map.put("{playerCount}", list.toArray().length + "");
+        map.put("{playerList}", OnlinePlayerListManager.getInstance().formatStringList(list));
         return getFormattedMessage("list", map);
     }
 

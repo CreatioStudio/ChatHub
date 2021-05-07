@@ -49,7 +49,7 @@ public class Net {
             headers.put("Content-Type", "application/json");
             post(url, headers, data.toString().getBytes());
         } catch (IOException e) {
-            ProxyServer.getInstance().getLogger().severe("Fail post data to "+ url);
+            ProxyServer.getInstance().getLogger().severe("Fail post data to " + url);
         }
     }
 
@@ -77,11 +77,7 @@ public class Net {
         os.close();
     }
 
-    public static void broadcastEvent(String path, String player, String serverFrom, String serverTo, String serverOn, String message) {
-        broadcastEvent(path, player, serverFrom, serverTo, serverOn, message, -1);
-    }
-
-    public static void broadcastEvent(String path, String player, String serverFrom, String serverTo, String serverOn, String message, int messageId) {
+    public static void broadcastEvent(String path, String player, String serverFrom, String serverTo, String serverOn, String message, int messageId, String target) {
         JSONObject data = new JSONObject();
         data.put("path", path);
         data.put("player", player);
@@ -90,11 +86,36 @@ public class Net {
         data.put("serverOn", serverOn);
         data.put("message", message);
         data.put("messageId", messageId);
+        data.put("target", target);
         data.put("token", ConfigManager.getInstance().getBroadcastToken());
         new Thread(() -> {
             for (String addr : ConfigManager.getInstance().getBroadcastServers()) {
                 Net.postJSONRequest("http://" + addr + path, data);
             }
         }).start();
+    }
+
+    public static void broadcastJoin(String player) {
+        broadcastEvent("/join", player, "", "", "", "", -1, "");
+    }
+
+    public static void broadcastLeave(String player) {
+        broadcastEvent("/leave", player, "", "", "", "", -1, "");
+    }
+
+    public static void broadcastSwitch(String player, String serverFrom, String serverTo) {
+        broadcastEvent("/switch", player, serverFrom, serverTo, "", "", -1, "");
+    }
+
+    public static void broadcastChatTry(String player, String serverOn, String message, int messageId) {
+        broadcastEvent("/chatTry", player, "", "", serverOn, message, messageId, "");
+    }
+
+    public static void broadcastChat(String player, String serverOn, String message) {
+        broadcastEvent("/chat", player, "", "", serverOn, message, -1, "");
+    }
+
+    public static void broadcastMsg(String player, String message, String target) {
+        broadcastEvent("/msg", player, "", "", "", message, -1, target);
     }
 }
