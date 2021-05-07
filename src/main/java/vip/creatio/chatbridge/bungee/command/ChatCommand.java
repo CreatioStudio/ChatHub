@@ -9,6 +9,7 @@ import vip.creatio.chatbridge.bungee.ChatBridge;
 import vip.creatio.chatbridge.bungee.config.ConfigManager;
 import vip.creatio.chatbridge.bungee.manager.OnlinePlayerListManager;
 import vip.creatio.chatbridge.bungee.qq.Bot;
+import vip.creatio.chatbridge.bungee.server.Server;
 import vip.creatio.chatbridge.tool.Net;
 
 import java.util.Arrays;
@@ -24,9 +25,12 @@ public class ChatCommand extends Command {
         if (args.length == 0) {
             sender.sendMessage(new TextComponent("§8§l» §cUnknown command"));
         } else if ("reload".equals(args[0])) {
+            Server.getInstance().stopServer();
             ChatBridge chatBridge = (ChatBridge) ProxyServer.getInstance().getPluginManager().getPlugin("ChatBridge");
             ConfigManager.getInstance().loadConfig(chatBridge);
             sender.sendMessage(new TextComponent("§8§l» §7Reload config success"));
+            Server.getInstance().startServer();
+            sender.sendMessage(new TextComponent("§8§l» §7Reload server success"));
         } else if ("list".equals(args[0])) {
             for (String line : OnlinePlayerListManager.getInstance().getStringServerPlayerList().split("\n")) {
                 sender.sendMessage(new TextComponent(line));
