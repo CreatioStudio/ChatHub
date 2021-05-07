@@ -1,11 +1,11 @@
-package vip.creatio.ChatBridge;
+package vip.creatio.chatbridge;
 
 import net.md_5.bungee.api.plugin.Plugin;
-import vip.creatio.ChatBridge.manager.OnlinePlayerListManager;
-import vip.creatio.ChatBridge.server.Server;
-import vip.creatio.ChatBridge.config.ConfigManager;
-import vip.creatio.ChatBridge.event.BungeeEventListener;
-import vip.creatio.ChatBridge.command.ChatCommand;
+import vip.creatio.chatbridge.manager.OnlinePlayerListManager;
+import vip.creatio.chatbridge.server.Server;
+import vip.creatio.chatbridge.config.ConfigManager;
+import vip.creatio.chatbridge.event.BungeeEventListener;
+import vip.creatio.chatbridge.command.ChatCommand;
 
 public final class ChatBridge extends Plugin {
     @Override

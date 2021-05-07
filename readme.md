@@ -1,3 +1,4 @@
+<!-- markdownlint-disable-file MD024 -->
 # Chat Bridge
 
 > Bungeecord 跨服聊天插件
@@ -8,24 +9,20 @@
 
 ## 功能
 
-- Bungeecord 内各子服聊天互通
-- 可配置的直达服务器消息前缀
-- 可配置的加入、离开、切换服务器、消息事件格式
-- 可配置的服务器ID和自定义名称转换
-- 多 BC 间互通广播事件
-- 不依赖子服核心，纯 Bungeecord 插件
+- 纯 Bungeecord 插件，各子服聊天互通
+- 可配置消息事件格式、服务器名、直达服务器格式
+- 多服或多 BC 间互通消息、私聊
+- 彩色聊天
+- QQ互通
+- 敏感词屏蔽
 
 ## 配置文件
 
 配置文件为 `plugins/ChatBridge/config.yml`
 
-## ignore_prefix
-
-默认值：`!!`
-
-忽略处理的聊天消息前缀
-
 ## message
+
+消息格式
 
 默认值：
 
@@ -34,37 +31,47 @@ join: '§8[§a+§8] §e{player}'
 leave: '§8[§c-§8] §e{player}'
 switch: '§8[§b❖§8] §e{player}§r: §7«{serverFrom}§7» §6➟ §7«{serverTo}§7»'
 chat: '§7[{serverOn}§7]§e{player}§r: {message}'
+msg_sender: '§7§o你悄悄地对{target}说: {message}'
+msg_target: '§7§o{sender}悄悄地对你说: {message}'
+block_word: '§8§l» §c你的消息 "{message}" 被禁止发送, 因为包含敏感词 "{blockWord}"'
+list: '§8§l» §7[{serverOn}§7]当前共有§6{playerCount}§7名玩家在线: §e{playerList}'
 ```
 
-不同事件显示的消息，`{variable}` 将被替换
-
 ## server_name
+
+服务器 ID 和服务器名对照表
 
 默认值：
 
 ```yaml
-serverID: serverName
+qq: '§5§l群聊天'
 ```
 
-服务器ID和服务器名的对照表
+## port
 
-### broadcast
-
-多 BC 间广播消息配置
-
-#### port
+接收广播和QQ上报的服务器端口
 
 默认值：`51800`
 
-接收广播消息的端口
+## broadcast
 
-#### token
+多 BC 间广播消息配置
 
-默认值：`token`
+### token
 
 秘钥
 
-#### servers
+默认值：`token`
+
+### cancel_timeout
+
+取消消息事件时间限制
+
+默认值：`50`
+
+### servers
+
+广播的目标服务器
 
 默认值：
 
@@ -72,4 +79,70 @@ serverID: serverName
 - 'host:port'
 ```
 
-广播的目标服务器
+## ignore_rules
+
+忽略处理的聊天消息格式
+
+默认值：
+
+```yaml
+  - '!!.*'
+```
+
+## block_words
+
+敏感词列表
+
+默认值：
+
+```yaml
+  - 'Hello'
+```
+
+## qq
+
+QQ 互通设置
+
+### enable
+
+是否启用
+
+默认值：`false`
+
+### path
+
+接收上报消息 URL 路径
+
+默认值：`/qq`
+
+### api_url
+
+QQ 机器人 API URL
+
+默认值：`http://localhost:5700`
+
+### message
+
+是否互相转发消息
+
+默认值：`false`
+
+### group_id
+
+允许的群列表
+
+默认值：
+
+```yaml
+  - 123123123
+```
+
+## 开发
+
+### 广播
+
+#### 格式
+
+#### join
+
+该路径接收

@@ -1,4 +1,4 @@
-package vip.creatio.ChatBridge.tool;
+package vip.creatio.chatbridge.tool;
 
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import me.leoko.advancedban.manager.PunishmentManager;

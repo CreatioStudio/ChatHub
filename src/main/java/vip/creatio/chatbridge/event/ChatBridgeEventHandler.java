@@ -1,18 +1,18 @@
-package vip.creatio.ChatBridge.event;
+package vip.creatio.chatbridge.event;
 
 import com.alibaba.fastjson.JSONObject;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.*;
-import vip.creatio.ChatBridge.config.ConfigManager;
-import vip.creatio.ChatBridge.manager.MessageManager;
-import vip.creatio.ChatBridge.manager.OnlinePlayerListManager;
-import vip.creatio.ChatBridge.qq.Bot;
-import vip.creatio.ChatBridge.qq.Info;
-import vip.creatio.ChatBridge.tool.AdvancedBan;
-import vip.creatio.ChatBridge.tool.Message;
-import vip.creatio.ChatBridge.tool.Net;
+import vip.creatio.chatbridge.config.ConfigManager;
+import vip.creatio.chatbridge.manager.MessageManager;
+import vip.creatio.chatbridge.manager.OnlinePlayerListManager;
+import vip.creatio.chatbridge.qq.Bot;
+import vip.creatio.chatbridge.qq.Info;
+import vip.creatio.chatbridge.tool.AdvancedBan;
+import vip.creatio.chatbridge.tool.Message;
+import vip.creatio.chatbridge.tool.Net;
 
 import java.util.Arrays;
 import java.util.regex.Pattern;
