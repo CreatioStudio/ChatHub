@@ -55,6 +55,12 @@ public class Server {
                     MessageManager.getInstance().cancelMessage(data.getInteger("messageId"));
                 }
             });
+            server.createContext("/msg", new BaseHandler() {
+                @Override
+                public void handleRequest(JSONObject data) {
+                    ChatBridgeEventHandler.getInstance().onReceiveBroadcastMsg(data);
+                }
+            });
             server.createContext(ConfigManager.getInstance().getQqPath(), exchange -> {
                 try {
                     ChatBridgeEventHandler.getInstance().onReceiveQQPost(Net.parseData(exchange.getRequestBody()));

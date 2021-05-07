@@ -7,7 +7,9 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 import vip.creatio.ChatBridge.ChatBridge;
 import vip.creatio.ChatBridge.config.ConfigManager;
+import vip.creatio.ChatBridge.manager.OnlinePlayerListManager;
 import vip.creatio.ChatBridge.qq.Bot;
+import vip.creatio.ChatBridge.tool.Net;
 
 import java.util.Arrays;
 
@@ -24,21 +26,25 @@ public class ChatCommand extends Command {
             ConfigManager.getInstance().loadConfig(chatBridge);
             sender.sendMessage(new TextComponent("§8§l» §7Reload config success"));
         } else if ("list".equals(args[0])) {
-            sender.sendMessage(new TextComponent(ConfigManager.getInstance().getListMessage()));
+            for (String line : OnlinePlayerListManager.getInstance().getStringServerPlayerList().split("\n")) {
+                sender.sendMessage(new TextComponent(line));
+            }
         } else if ("msg".equals(args[0])) {
             if (isProxiedPlayer(sender)) {
                 if (args.length < 3) {
                     sender.sendMessage(new TextComponent("§8§l» §cUsage /chat <name> <msg>"));
-                    return;
-                }
-                ProxiedPlayer target = ProxyServer.getInstance().getPlayer(args[1]);
-                if (target != null) {
-                    String senderMsg = "§7§o你悄悄地对" + sender.getName() + "说: " + String.join(" ", Arrays.asList(args).subList(2, args.length));
-                    String targetMsg = "§7§o" + sender.getName() + "悄悄地对你说: " + String.join(" ", Arrays.asList(args).subList(2, args.length));
-                    sender.sendMessage(new TextComponent(senderMsg));
-                    target.sendMessage(new TextComponent(targetMsg));
-                } else {
+                } else if (!OnlinePlayerListManager.getInstance().isOnline(args[1])) {
                     sender.sendMessage(new TextComponent("§8§l» §cPlayer " + args[1] + " is not online"));
+                } else {
+                    String message = String.join(" ", Arrays.asList(args).subList(2, args.length));
+                    sender.sendMessage(new TextComponent(ConfigManager.getInstance().getMsgSenderMessage(args[1], message)));
+
+                    ProxiedPlayer target = ProxyServer.getInstance().getPlayer(args[1]);
+                    if (target != null) {
+                        target.sendMessage(new TextComponent(ConfigManager.getInstance().getMsgTargetMessage(sender.getName(), message)));
+                    } else {
+                        Net.broadcastMsg(sender.getName(), message, args[1]);
+                    }
                 }
             }
         } else if ("qq".equals(args[0])) {
