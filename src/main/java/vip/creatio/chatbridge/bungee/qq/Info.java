@@ -34,6 +34,7 @@ public class Info {
         contentTemp = contentTemp.replaceAll("\\[CQ:share,file=.*?]", "[链接]");
         contentTemp = contentTemp.replaceAll("\\[CQ:face,id=.*?]", "[表情]");
         contentTemp = contentTemp.replaceAll("\\[CQ:record,file=.*?]", "[语音]");
+        contentTemp = contentTemp.replaceAll("\\[CQ:.*?]", "[其他消息]"); // To svoid json data spamming the chat screen
         content = contentTemp;
         sender = data.getJSONObject("sender");
         if (source_type.equals("private")) {
