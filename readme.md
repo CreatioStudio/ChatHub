@@ -1,5 +1,7 @@
 <!-- markdownlint-disable-file MD024 -->
-# Chat Bridge
+# Chat Hub
+
+![icon](icon.png)
 
 > Bungeecord 跨服聊天插件
 
@@ -20,7 +22,7 @@
 
 1.在 Release 页面下载最新版插件，放入 Bungeecord 服务器的 `plugins` 文件夹内
 1.重启 Bungeecord
-1.修改 `plugins/ChatBridge/config.yml`
+1.修改 `plugins/ChatHub/config.yml`
 1.使用 `chat reload` 指令重载配置文件
 
 ## 指令
@@ -41,7 +43,7 @@
 
 ## 配置文件
 
-配置文件为 `plugins/ChatBridge/config.yml`
+配置文件为 `plugins/ChatHub/config.yml`
 
 ## message
 

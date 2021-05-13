@@ -5,13 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>vip.creatio</groupId>
-    <artifactId>ChatBridge</artifactId>
+    <artifactId>ChatHub</artifactId>
     <version>0.0.4</version>
     <packaging>jar</packaging>
 
-    <name>ChatBridge</name>
+    <name>ChatHub</name>
 
-    <description>ChatBridge for BungeeCord</description>
+    <description>Display chat for subserver on BungeeCord</description>
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

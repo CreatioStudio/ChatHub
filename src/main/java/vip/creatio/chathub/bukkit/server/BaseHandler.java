@@ -1,10 +1,10 @@
-package vip.creatio.chatbridge.bukkit.server;
+package vip.creatio.chathub.bukkit.server;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import vip.creatio.chatbridge.bukkit.config.Config;
-import vip.creatio.chatbridge.tool.Net;
+import vip.creatio.chathub.bukkit.config.Config;
+import vip.creatio.chathub.tool.Net;
 
 class BaseHandler implements HttpHandler {
     @Override

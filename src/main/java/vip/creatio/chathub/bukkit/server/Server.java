@@ -1,4 +1,4 @@
-package vip.creatio.chatbridge.bukkit.server;
+package vip.creatio.chathub.bukkit.server;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sun.net.httpserver.HttpExchange;
@@ -6,8 +6,8 @@ import com.sun.net.httpserver.HttpServer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import vip.creatio.chatbridge.bukkit.config.Config;
-import vip.creatio.chatbridge.tool.Net;
+import vip.creatio.chathub.bukkit.config.Config;
+import vip.creatio.chathub.tool.Net;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

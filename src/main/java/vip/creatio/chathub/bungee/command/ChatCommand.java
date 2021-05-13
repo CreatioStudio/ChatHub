@@ -1,16 +1,16 @@
-package vip.creatio.chatbridge.bungee.command;
+package vip.creatio.chathub.bungee.command;
 
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
-import vip.creatio.chatbridge.bungee.ChatBridge;
-import vip.creatio.chatbridge.bungee.config.ConfigManager;
-import vip.creatio.chatbridge.bungee.manager.OnlinePlayerListManager;
-import vip.creatio.chatbridge.bungee.qq.Bot;
-import vip.creatio.chatbridge.bungee.server.Server;
-import vip.creatio.chatbridge.tool.Net;
+import vip.creatio.chathub.bungee.ChatHub;
+import vip.creatio.chathub.bungee.config.ConfigManager;
+import vip.creatio.chathub.bungee.manager.OnlinePlayerListManager;
+import vip.creatio.chathub.bungee.qq.Bot;
+import vip.creatio.chathub.bungee.server.Server;
+import vip.creatio.chathub.tool.Net;
 
 import java.util.Arrays;
 
@@ -26,8 +26,8 @@ public class ChatCommand extends Command {
             sender.sendMessage(new TextComponent("§8§l» §cUnknown command"));
         } else if ("reload".equals(args[0])) {
             Server.getInstance().stopServer();
-            ChatBridge chatBridge = (ChatBridge) ProxyServer.getInstance().getPluginManager().getPlugin("ChatBridge");
-            ConfigManager.getInstance().loadConfig(chatBridge);
+            ChatHub chatHub = (ChatHub) ProxyServer.getInstance().getPluginManager().getPlugin("ChatHub");
+            ConfigManager.getInstance().loadConfig(chatHub);
             sender.sendMessage(new TextComponent("§8§l» §7Reload config success"));
             Server.getInstance().startServer();
             sender.sendMessage(new TextComponent("§8§l» §7Reload server success"));

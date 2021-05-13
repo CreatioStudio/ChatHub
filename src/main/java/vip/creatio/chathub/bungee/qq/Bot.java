@@ -1,8 +1,8 @@
-package vip.creatio.chatbridge.bungee.qq;
+package vip.creatio.chathub.bungee.qq;
 
 import com.alibaba.fastjson.JSONObject;
-import vip.creatio.chatbridge.bungee.config.ConfigManager;
-import vip.creatio.chatbridge.tool.Net;
+import vip.creatio.chathub.bungee.config.ConfigManager;
+import vip.creatio.chathub.tool.Net;
 
 import java.util.List;
 

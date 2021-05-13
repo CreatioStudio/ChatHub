@@ -1,9 +1,9 @@
-package vip.creatio.chatbridge.bungee.server;
+package vip.creatio.chathub.bungee.server;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sun.net.httpserver.HttpServer;
-import vip.creatio.chatbridge.bungee.config.ConfigManager;
-import vip.creatio.chatbridge.bungee.event.ChatBridgeEventHandler;
+import vip.creatio.chathub.bungee.config.ConfigManager;
+import vip.creatio.chathub.bungee.event.ChatHubEventHandler;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -26,7 +26,7 @@ public class Server {
                 @Override
                 public String handleRequest(JSONObject data) {
                     if (this.checkToken(data)) {
-                        ChatBridgeEventHandler.getInstance().onReceiveBroadcastJoin(data);
+                        ChatHubEventHandler.getInstance().onReceiveBroadcastJoin(data);
                         return super.handleRequest(data);
                     } else {
                         return "Error Token";
@@ -37,7 +37,7 @@ public class Server {
                 @Override
                 public String handleRequest(JSONObject data) {
                     if (this.checkToken(data)) {
-                        ChatBridgeEventHandler.getInstance().onReceiveBroadcastLeave(data);
+                        ChatHubEventHandler.getInstance().onReceiveBroadcastLeave(data);
                         return super.handleRequest(data);
                     } else {
                         return "Error Token";
@@ -48,7 +48,7 @@ public class Server {
                 @Override
                 public String handleRequest(JSONObject data) {
                     if (this.checkToken(data)) {
-                        ChatBridgeEventHandler.getInstance().onReceiveBroadcastSwitch(data);
+                        ChatHubEventHandler.getInstance().onReceiveBroadcastSwitch(data);
                         return super.handleRequest(data);
                     } else {
                         return "Error Token";
@@ -60,7 +60,7 @@ public class Server {
                 @Override
                 public String handleRequest(JSONObject data) {
                     if (this.checkToken(data)) {
-                        ChatBridgeEventHandler.getInstance().onReceiveBroadcastChat(data);
+                        ChatHubEventHandler.getInstance().onReceiveBroadcastChat(data);
                         return super.handleRequest(data);
                     } else {
                         return "Error Token";
@@ -71,7 +71,7 @@ public class Server {
                 @Override
                 public String handleRequest(JSONObject data) {
                     if (this.checkToken(data)) {
-                        ChatBridgeEventHandler.getInstance().onReceiveBroadcastMsg(data);
+                        ChatHubEventHandler.getInstance().onReceiveBroadcastMsg(data);
                         return super.handleRequest(data);
                     } else {
                         return "Error Token";
@@ -81,7 +81,7 @@ public class Server {
             server.createContext(ConfigManager.getInstance().getQqPath(), new BaseHandler() {
                 @Override
                 public String handleRequest(JSONObject data) {
-                    ChatBridgeEventHandler.getInstance().onReceiveQQPost(data);
+                    ChatHubEventHandler.getInstance().onReceiveQQPost(data);
                     return super.handleRequest(data);
                 }
             });

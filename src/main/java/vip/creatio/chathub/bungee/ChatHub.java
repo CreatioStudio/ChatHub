@@ -1,13 +1,13 @@
-package vip.creatio.chatbridge.bungee;
+package vip.creatio.chathub.bungee;
 
 import net.md_5.bungee.api.plugin.Plugin;
-import vip.creatio.chatbridge.bungee.manager.OnlinePlayerListManager;
-import vip.creatio.chatbridge.bungee.server.Server;
-import vip.creatio.chatbridge.bungee.config.ConfigManager;
-import vip.creatio.chatbridge.bungee.event.BungeeEventListener;
-import vip.creatio.chatbridge.bungee.command.ChatCommand;
+import vip.creatio.chathub.bungee.manager.OnlinePlayerListManager;
+import vip.creatio.chathub.bungee.server.Server;
+import vip.creatio.chathub.bungee.config.ConfigManager;
+import vip.creatio.chathub.bungee.event.BungeeEventListener;
+import vip.creatio.chathub.bungee.command.ChatCommand;
 
-public final class ChatBridge extends Plugin {
+public final class ChatHub extends Plugin {
     @Override
     public void onEnable() {
         ConfigManager.getInstance().loadConfig(this);

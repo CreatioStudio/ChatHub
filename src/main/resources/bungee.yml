@@ -1,6 +1,6 @@
-name: ChatBridge
+name: ${project.name}
 version: ${project.version}
-main: vip.creatio.chatbridge.bungee.ChatBridge
+main: vip.creatio.chathub.bungee.ChatHub
 author: Creatio Studio
 description: ${project.description}
 softDepends: [AdvancedBan]

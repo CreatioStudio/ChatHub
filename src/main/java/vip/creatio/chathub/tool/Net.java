@@ -1,11 +1,11 @@
-package vip.creatio.chatbridge.tool;
+package vip.creatio.chathub.tool;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.sun.net.httpserver.HttpExchange;
 import net.md_5.bungee.api.ProxyServer;
-import vip.creatio.chatbridge.bungee.config.ConfigManager;
-import vip.creatio.chatbridge.bungee.manager.MessageManager;
+import vip.creatio.chathub.bungee.config.ConfigManager;
+import vip.creatio.chathub.bungee.manager.MessageManager;
 
 import java.io.DataOutputStream;
 import java.io.IOException;

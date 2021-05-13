@@ -1,8 +1,8 @@
-package vip.creatio.chatbridge.bukkit.config;
+package vip.creatio.chathub.bukkit.config;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import vip.creatio.chatbridge.bukkit.ChatBridgeBukkit;
+import vip.creatio.chathub.bukkit.ChatHubBukkit;
 
 import java.io.File;
 
@@ -18,14 +18,14 @@ public class Config {
         return instance;
     }
 
-    public void loadConfig(ChatBridgeBukkit chatBridgeBukkit) {
-        File biuConfigFile = new File(chatBridgeBukkit.getDataFolder(), "config_bukkit.yml");
+    public void loadConfig(ChatHubBukkit chatHubBukkit) {
+        File biuConfigFile = new File(chatHubBukkit.getDataFolder(), "config_bukkit.yml");
         FileConfiguration config = YamlConfiguration.loadConfiguration(biuConfigFile);
         port = config.getInt("port");
-        chatBridgeBukkit.getLogger().info("Set http server port to " + port);
+        chatHubBukkit.getLogger().info("Set http server port to " + port);
 
         broadcastToken = config.getString("broadcast_token");
-        chatBridgeBukkit.getLogger().info("Set broadcast token to \"" + broadcastToken + "\"");
+        chatHubBukkit.getLogger().info("Set broadcast token to \"" + broadcastToken + "\"");
     }
 
 

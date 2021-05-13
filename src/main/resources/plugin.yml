@@ -1,7 +1,6 @@
-name: ChatBridgeBukkit
+name: ChatHubBukkit
 version: ${project.version}
-main: vip.creatio.chatbridge.bukkit.ChatBridgeBukkit
+main: vip.creatio.chathub.bukkit.ChatHubBukkit
 api-version: 1.15
 authors: [ CreatioStudio ]
 description: ${project.description}
-website: CreatioStudio.github.io

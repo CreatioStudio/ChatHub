@@ -1,29 +1,29 @@
-package vip.creatio.chatbridge.bungee.event;
+package vip.creatio.chathub.bungee.event;
 
 import com.alibaba.fastjson.JSONObject;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.*;
-import vip.creatio.chatbridge.bungee.config.ConfigManager;
-import vip.creatio.chatbridge.bungee.manager.MessageManager;
-import vip.creatio.chatbridge.bungee.manager.OnlinePlayerListManager;
-import vip.creatio.chatbridge.bungee.qq.Bot;
-import vip.creatio.chatbridge.bungee.qq.Info;
-import vip.creatio.chatbridge.tool.AdvancedBan;
-import vip.creatio.chatbridge.tool.Message;
-import vip.creatio.chatbridge.tool.Net;
+import vip.creatio.chathub.bungee.config.ConfigManager;
+import vip.creatio.chathub.bungee.manager.MessageManager;
+import vip.creatio.chathub.bungee.manager.OnlinePlayerListManager;
+import vip.creatio.chathub.bungee.qq.Bot;
+import vip.creatio.chathub.bungee.qq.Info;
+import vip.creatio.chathub.tool.AdvancedBan;
+import vip.creatio.chathub.tool.Message;
+import vip.creatio.chathub.tool.Net;
 
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
-public class ChatBridgeEventHandler {
-    private static final ChatBridgeEventHandler instance = new ChatBridgeEventHandler();
+public class ChatHubEventHandler {
+    private static final ChatHubEventHandler instance = new ChatHubEventHandler();
 
-    private ChatBridgeEventHandler() {
+    private ChatHubEventHandler() {
     }
 
-    public static ChatBridgeEventHandler getInstance() {
+    public static ChatHubEventHandler getInstance() {
         return instance;
     }
 
