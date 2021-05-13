@@ -27,7 +27,11 @@ public class Info {
         user_id = data.getInteger("user_id");
         source_type = data.getString("message_type");
         source_sub_type = data.getString("sub_type");
-        raw_content = data.getJSONArray("message");
+        if (data.get("message") instanceof String ){
+            raw_content = new JSONArray();
+        } else {
+            raw_content = data.getJSONArray("message");
+        }
         String contentTemp = data.getString("raw_message");
         contentTemp = contentTemp.replace("CQ:at,qq=", "@");
         contentTemp = contentTemp.replaceAll("\\[CQ:image,file=.*?]", "[图片]");

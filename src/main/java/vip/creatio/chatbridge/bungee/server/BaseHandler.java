@@ -9,18 +9,20 @@ import vip.creatio.chatbridge.tool.Net;
 class BaseHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) {
-        JSONObject data = Net.parseData(exchange.getRequestBody());
-        String token = data.getString("token");
-        if (token != null && token.equals(ConfigManager.getInstance().getBroadcastToken())) {
-            if (!handleRequest(data)) {
-                Net.sendResponse(exchange, "OK");
-            }
-        } else {
-            Net.sendResponse(exchange, "Error Token");
+        try {
+            JSONObject data = Net.parseData(exchange.getRequestBody());
+            Net.sendResponse(exchange, handleRequest(data));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    public boolean handleRequest(JSONObject data) {
-        return false;
+    public boolean checkToken(JSONObject data) {
+        String token = data.getString("token");
+        return token != null && token.equals(ConfigManager.getInstance().getBroadcastToken());
+    }
+
+    public String handleRequest(JSONObject data) {
+        return "OK";
     }
 }
