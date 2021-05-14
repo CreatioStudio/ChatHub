@@ -5,7 +5,6 @@ import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
-import vip.creatio.chathub.bungee.ChatHub;
 import vip.creatio.chathub.bungee.config.ConfigManager;
 import vip.creatio.chathub.bungee.manager.OnlinePlayerListManager;
 import vip.creatio.chathub.bungee.qq.Bot;
@@ -26,8 +25,7 @@ public class ChatCommand extends Command {
             sender.sendMessage(new TextComponent("§8§l» §cUnknown command"));
         } else if ("reload".equals(args[0])) {
             Server.getInstance().stopServer();
-            ChatHub chatHub = (ChatHub) ProxyServer.getInstance().getPluginManager().getPlugin("ChatHub");
-            ConfigManager.getInstance().loadConfig(chatHub);
+            ConfigManager.getInstance().loadConfig();
             sender.sendMessage(new TextComponent("§8§l» §7Reload config success"));
             Server.getInstance().startServer();
             sender.sendMessage(new TextComponent("§8§l» §7Reload server success"));

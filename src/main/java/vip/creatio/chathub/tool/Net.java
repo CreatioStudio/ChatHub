@@ -3,7 +3,7 @@ package vip.creatio.chathub.tool;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.sun.net.httpserver.HttpExchange;
-import net.md_5.bungee.api.ProxyServer;
+import vip.creatio.chathub.bungee.ChatHub;
 import vip.creatio.chathub.bungee.config.ConfigManager;
 import vip.creatio.chathub.bungee.manager.MessageManager;
 
@@ -64,7 +64,7 @@ public class Net {
             headers.put("Content-Type", "application/json");
             return post(url, headers, data.toString().getBytes());
         } catch (IOException e) {
-            ProxyServer.getInstance().getLogger().severe("Fail post data to " + url);
+            ChatHub.getInstance().getLogger().severe("Fail post data to " + url);
             return null;
         }
     }

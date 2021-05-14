@@ -27,82 +27,84 @@ public class Config {
     private List<Integer> qqGroupId;
 
     protected Config() {
+        loadConfig();
     }
 
-    public void loadConfig(ChatHub chatHub) {
-        if (!chatHub.getDataFolder().exists()) {
-            if (!chatHub.getDataFolder().mkdir()) {
-                chatHub.getLogger().warning("Cannot make data folder");
+    public void loadConfig() {
+        if (!ChatHub.getInstance().getDataFolder().exists()) {
+            if (!ChatHub.getInstance().getDataFolder().mkdir()) {
+                ChatHub.getInstance().getLogger().warning("Cannot make data folder");
             }
         }
-        File configFile = new File(chatHub.getDataFolder(), "config.yml");
+        File configFile = new File(ChatHub.getInstance().getDataFolder(), "config.yml");
         try {
             if (!configFile.exists()) {
-                Files.copy(chatHub.getResourceAsStream("config.yml"), configFile.toPath());
+                Files.copy(ChatHub.getInstance().getResourceAsStream("config.yml"), configFile.toPath());
             }
             Configuration config = ConfigurationProvider.getProvider(YamlConfiguration.class).load(configFile);
 
             // message
             Configuration messageConfiguration = (Configuration) config.get("message");
             messageMap = new HashMap<>();
-            chatHub.getLogger().info("Set message:");
+            ChatHub.getInstance().getLogger().info("Set message:");
             for (String event : messageConfiguration.getKeys()) {
                 String messageString = messageConfiguration.get(event).toString();
                 messageMap.put(event, messageString);
-                chatHub.getLogger().info("  - " + event + " : " + messageString);
+                ChatHub.getInstance().getLogger().info("  - " + event + " : " + messageString);
             }
 
             // server_name
             Configuration serverNameConfiguration = (Configuration) config.get("server_name");
             serverNameMap = new HashMap<>();
-            chatHub.getLogger().info("Set server name mapping:");
+            ChatHub.getInstance().getLogger().info("Set server name mapping:");
             for (String serverId : serverNameConfiguration.getKeys()) {
                 String serverName = serverNameConfiguration.get(serverId).toString();
                 serverNameMap.put(serverId, serverName);
-                chatHub.getLogger().info("  - " + serverId + " : " + serverName);
+                ChatHub.getInstance().getLogger().info("  - " + serverId + " : " + serverName);
             }
 
             // port
             port = config.getInt("port");
-            chatHub.getLogger().info("Set http server port to " + port);
+            ChatHub.getInstance().getLogger().info("Set http server port to " + port);
 
             // broadcast
             broadcastToken = config.getString("broadcast.token");
-            chatHub.getLogger().info("Set broadcast token to \"" + broadcastToken + "\"");
+            ChatHub.getInstance().getLogger().info("Set broadcast token to \"" + broadcastToken + "\"");
             broadcastCancelTimeout = config.getInt("broadcast.cancel_timeout");
-            chatHub.getLogger().info("Set broadcast cancel timeout to " + broadcastCancelTimeout + "ms");
+            ChatHub.getInstance().getLogger().info("Set broadcast cancel timeout to " + broadcastCancelTimeout + "ms");
             broadcastServers = config.getStringList("broadcast.servers");
             broadcastServers.remove("host:port");
-            displayList(chatHub, "Set broadcast servers:", broadcastServers);
+            displayList("Set broadcast servers:", broadcastServers);
 
             // ignore_rules
             ignoreRules = config.getStringList("ignore_rules");
-            displayList(chatHub, "Set ignore rules:", ignoreRules);
+            displayList("Set ignore rules:", ignoreRules);
 
             // block_words
             blockWords = config.getStringList("block_words");
-            displayList(chatHub, "Set block words:", blockWords);
+            displayList("Set block words:", blockWords);
 
             // qq
             qqEnable = config.getBoolean("qq.enable");
-            chatHub.getLogger().info("Set qq enable to " + qqEnable);
+            ChatHub.getInstance().getLogger().info("Set qq enable to " + qqEnable);
             qqPath = config.getString("qq.path");
-            chatHub.getLogger().info("Set qq path to " + qqPath);
+            ChatHub.getInstance().getLogger().info("Set qq path to " + qqPath);
             qqApiURL = config.getString("qq.api_url");
-            chatHub.getLogger().info("Set qq api url to " + qqApiURL);
+            ChatHub.getInstance().getLogger().info("Set qq api url to " + qqApiURL);
             qqMessage = config.getBoolean("qq.message");
-            chatHub.getLogger().info("Set qq message to " + qqMessage);
+            ChatHub.getInstance().getLogger().info("Set qq message to " + qqMessage);
             qqGroupId = config.getIntList("qq.group_id");
-            displayList(chatHub, "Set qq group id:", qqGroupId);
+            displayList("Set qq group id:", qqGroupId);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public <E> void displayList(ChatHub chatHub, String title, List<E> list) {
-        chatHub.getLogger().info(title);
+
+    public <E> void displayList(String title, List<E> list) {
+        ChatHub.getInstance().getLogger().info(title);
         for (E i : list) {
-            chatHub.getLogger().info("  - " + i);
+            ChatHub.getInstance().getLogger().info("  - " + i);
         }
     }
 
