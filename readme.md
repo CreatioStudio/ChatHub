@@ -1,6 +1,9 @@
 <!-- markdownlint-disable-file MD024 -->
 # Chat Bridge
 
+> [!IMPORTANT]  
+> This repository is archived as Bungeecord is no longer popularly used, please check <https://github.com/AnzhiZhang/ChatHub> for the velocity plugin.
+
 > Bungeecord 跨服聊天插件
 
 在 Bungeecord 服务器中跨服聊天
